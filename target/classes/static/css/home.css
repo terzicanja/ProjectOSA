@@ -1,0 +1,61 @@
+.leftboard{
+	display: inline-block;
+	background-color: red;
+	float: left;
+	width: 18.9%;
+}
+
+.posts{
+	display: inline-block;
+	background-color: yellow;
+	float: left;
+	width: 38.4%;
+}
+
+.rightboard{
+	display: inline-block;
+	background-color: blue;
+	float: left;
+	width: 18.9%;
+}
+
+.test{
+	background-color: green;
+	width: 290px;
+}
+.test2{
+	background-color: lime;
+	width: 50%;
+}
+
+.post{
+	padding: 5px;
+}
+
+.pic{
+	width: 50px;
+	height: 50px;
+	background-color: grey;
+	display: inline-block;
+	float: left;
+}
+
+.username{
+	display: inline-block;
+	float: left;
+}
+
+#title{
+	display: inline;
+}
+
+#img{
+	width: 200px;
+	height: 200px;
+	background-color: grey;
+}
+
+
+
+
+
