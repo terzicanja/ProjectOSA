@@ -96,14 +96,43 @@ public class CommentController {
 			return new ResponseEntity<CommentDTO>(HttpStatus.BAD_REQUEST);
 		}
 		
-		comment.setTitle(commentDTO.getTitle());
+//		comment.setTitle(commentDTO.getTitle());
 		comment.setDescription(commentDTO.getDescription());
 		//msm da vamo treba staviti trenutno vreme
 //		comment.setDate(commentDTO.getDate());
-		comment.setLikes(commentDTO.getLikes());
-		comment.setDislikes(commentDTO.getDislikes());
+//		comment.setLikes(commentDTO.getLikes());
+//		comment.setLikes(comment.getLikes() + 1);
+//		comment.setDislikes(commentDTO.getDislikes());
 //		comment.setPost(postService.findOne(commentDTO.getPost().getId()));
 //		comment.setUser(userService.findOne(commentDTO.getUser().getId()));
+		
+		comment = commentService.save(comment);
+		return new ResponseEntity<CommentDTO>(new CommentDTO(comment), HttpStatus.CREATED);
+	}
+	
+	
+	@PutMapping(value = "/upvote/{id}", consumes = "application/json")
+	public ResponseEntity<CommentDTO> upvoteComment(@RequestBody CommentDTO commentDTO, @PathVariable("id") Integer id){
+		Comment comment = commentService.findOne(id);
+		if(comment == null) {
+			return new ResponseEntity<CommentDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+		comment.setLikes(comment.getLikes() + 1);
+		
+		comment = commentService.save(comment);
+		return new ResponseEntity<CommentDTO>(new CommentDTO(comment), HttpStatus.CREATED);
+	}
+	
+	
+	@PutMapping(value = "/downvote/{id}", consumes = "application/json")
+	public ResponseEntity<CommentDTO> downvoteComment(@RequestBody CommentDTO commentDTO, @PathVariable("id") Integer id){
+		Comment comment = commentService.findOne(id);
+		if(comment == null) {
+			return new ResponseEntity<CommentDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+		comment.setDislikes(comment.getDislikes() + 1);
 		
 		comment = commentService.save(comment);
 		return new ResponseEntity<CommentDTO>(new CommentDTO(comment), HttpStatus.CREATED);

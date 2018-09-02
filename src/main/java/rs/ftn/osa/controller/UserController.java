@@ -1,5 +1,6 @@
 package rs.ftn.osa.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,15 @@ public class UserController {
         return new BCryptPasswordEncoder();
     }
 	
+	
+//	@RequestMapping("/whoami")
+	@GetMapping(value = "/whoami")
+    public ResponseEntity<UserDTO> user(Principal user) {
+		User logged = userService.findByUsername(user.getName());
+		
+		return new ResponseEntity<>(new UserDTO(logged), HttpStatus.OK);
+//        return this.userService.findByUsername(user.getName());
+    }
 	
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> getUsers(){

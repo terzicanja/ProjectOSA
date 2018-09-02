@@ -142,6 +142,49 @@ public class PostController {
 	}
 	
 	
+	@PutMapping(value = "/upvote/{id}", consumes = "application/json")
+	public ResponseEntity<PostDTO> upvotePost(@RequestBody PostDTO postDTO, @PathVariable("id") Integer id){
+		Post post = postService.findOne(id);
+		if(post == null) {
+			return new ResponseEntity<PostDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+//		post.setTitle(postDTO.getTitle());
+//		post.setDescription(postDTO.getDescription());
+//		post.setPhoto(postDTO.getPhoto());
+//		post.setDate(postDTO.getDate());
+		post.setLikes(post.getLikes() + 1);
+//		post.setDislikes(postDTO.getDislikes());
+//		post.setLongitude(postDTO.getLongitude());
+//		post.setLatitude(postDTO.getLatitude());
+//		post.setUser(userService.findOne(postDTO.getUser().getId()));
+		
+		post = postService.save(post);
+		return new ResponseEntity<PostDTO>(new PostDTO(post), HttpStatus.CREATED);
+	}
+	
+	@PutMapping(value = "/downvote/{id}", consumes = "application/json")
+	public ResponseEntity<PostDTO> downvotePost(@RequestBody PostDTO postDTO, @PathVariable("id") Integer id){
+		Post post = postService.findOne(id);
+		if(post == null) {
+			return new ResponseEntity<PostDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+//		post.setTitle(postDTO.getTitle());
+//		post.setDescription(postDTO.getDescription());
+//		post.setPhoto(postDTO.getPhoto());
+//		post.setDate(postDTO.getDate());
+//		post.setLikes(post.getLikes() + 1);
+		post.setDislikes(post.getDislikes() + 1);
+//		post.setLongitude(postDTO.getLongitude());
+//		post.setLatitude(postDTO.getLatitude());
+//		post.setUser(userService.findOne(postDTO.getUser().getId()));
+		
+		post = postService.save(post);
+		return new ResponseEntity<PostDTO>(new PostDTO(post), HttpStatus.CREATED);
+	}
+	
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deletePost(@PathVariable("id") Integer id){
 		Post post = postService.findOne(id);

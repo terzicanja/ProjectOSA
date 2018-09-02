@@ -1,6 +1,7 @@
 .leftboard{
 	display: inline-block;
 	background-color: red;
+	margin-left: 150px;
 	float: left;
 	width: 18.9%;
 }
@@ -19,14 +20,7 @@
 	width: 18.9%;
 }
 
-.test{
-	background-color: green;
-	width: 290px;
-}
-.test2{
-	background-color: lime;
-	width: 50%;
-}
+
 
 .post{
 	padding: 5px;

@@ -1,6 +1,10 @@
 INSERT INTO users (user_username, user_password, user_name) VALUES ('a', '$2a$10$yS7pAhT6AVZUhW27So8NA.CQGybqWN4e5g8XV0/QQvw07lDqyH81y', 'Anja');
 INSERT INTO users (user_username, user_password, user_name) VALUES ('b', 'b', 'Bbb');
 
+INSERT INTO authority (name) VALUES ('ROLE_USER');
+INSERT INTO authority (name) VALUES ('ROLE_ADMIN');
+INSERT INTO authority (name) VALUES ('ROLE_COMMENTATOR');
+
 INSERT INTO posts (post_title, post_description, post_likes, post_date, post_dislikes, user_id, latitude, longitude) VALUES ('prva vest', 'Razni racunari', 11, '2017-12-11', 1, 2, 37.436227, -122.132592);
 INSERT INTO posts (post_title, post_description, post_likes, post_date, post_dislikes, user_id, latitude, longitude) VALUES ('druga vest', 'Prenosni racunari', 34, '2015-12-11', 2, 2, 33.998768, -118.273992);
 INSERT INTO posts (post_title, post_description, post_likes, post_date, post_dislikes, user_id, latitude, longitude) VALUES ('treca vest', 'Prenosni ali teski racunari', 5, '2011-12-11', 3, 1, -22.524330, -41.946920);

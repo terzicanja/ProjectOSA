@@ -48,6 +48,7 @@ public class TagController {
 	}
 	
 	
+	
 	@GetMapping(value = "/tagbypost/{id}")
     public ResponseEntity<List<TagDTO>>getTagsByPost(@PathVariable("id") Integer id){
     	System.out.println("prvi korak");
