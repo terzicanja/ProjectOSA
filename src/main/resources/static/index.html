@@ -43,10 +43,22 @@
 					<a href="#" class="username">username</a><br>
 					<div id="title">naslov</div>
 					<div id="img"></div>
+					
+					<button id="location">klikni mene</button>
+					
+					
 				</div>
 			</div>
 			<div class="posts">
-				
+				<div class="dropdown">
+					<button onclick="myFunction()" id="sort" class="dropbtn">Sort</button>
+					<div id="myDropdown" class="dropdown-content">
+						<a href="#sort" id="mostPopular">Most popular</a> 
+						<a href="#sort" id="leastPopular">Least popular</a> 
+						<a href="#sort" id="newest">Newest</a>
+						<a href="#sort" id="oldest">Oldest</a>
+					</div>
+				</div>
 			</div>
 			<div class="rightboard">
 				ovo je desnoooo
@@ -56,5 +68,23 @@
 		
 		proba test test
 	</body>
-
+	<script type="text/javascript">
+		function myFunction() {
+			document.getElementById("myDropdown").classList.toggle("show");
+		}
+		
+		window.onclick = function(event) {
+			if (!event.target.matches('.dropbtn')) {
+				var dropdowns = document
+						.getElementsByClassName("dropdown-content");
+				var i;
+				for (i = 0; i < dropdowns.length; i++) {
+					var openDropdown = dropdowns[i];
+					if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					}
+				}
+			}
+		}
+	</script>
 </html>

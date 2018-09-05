@@ -20,12 +20,19 @@ $(document).ready(function(){
 		crossDomain: true,
 		dataType: 'json',
 		success:function(data){
+			
 			console.log('postovi su: ' + data);
+			var request = new XMLHttpRequest();
+	        var method = 'GET';
+	        var async = true;
+			
 			for(var i=0; i<data.length; i++){
 //				if(data[i].active==true){
 					$('.posts').append('<div class="post">'+
 							'<div class="pic"></div>'+
-							'<a href="#" class="username">username</a><br>'+
+							'<a href="http://localhost:8080/html/profile.html?id='+data[i].user.username+'" class="username">'+
+							data[i].user.username+'</a><br>'+
+							'<p id="date">'+data[i].date+'</p>'+
 							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title">'+data[i].title+'</a>'+
 							'<div id="img"></div>'+
 						'</div>')
@@ -53,6 +60,25 @@ $(document).ready(function(){
 	$('#logoutbtn').on('click', function(){
 		localStorage.removeItem('token');
 		location.reload();
+	});
+	
+	$('#location').on('click', function(){
+		var request = new XMLHttpRequest();
+        var method = 'GET';
+        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&sensor=true';
+        var async = true;
+        
+        request.open(method, url, async);
+        request.onreadystatechange = function(){
+          if(request.readyState == 4 && request.status == 200){
+            var data = JSON.parse(request.responseText);
+            var address = data.results[0];
+            console.log(data.results[0]);
+            console.log("adresa je: "+address.formatted_address);
+//            document.write(address.formatted_address);
+          }
+        };
+        request.send();
 	});
 	
 	

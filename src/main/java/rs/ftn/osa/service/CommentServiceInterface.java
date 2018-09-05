@@ -11,6 +11,9 @@ public interface CommentServiceInterface {
 	List<Comment> findAll();
 	
 	List<Comment> findByPost_Id(Integer postId);
+	List<Comment> findAllByPost_IdOrderByDate(Integer id);
+    List<Comment> findAllByPost_IdOrderByLikes(Integer id);
+    List<Comment> findAllByPost_IdOrderByDislikes(Integer id);
 	
 	Comment save(Comment comment);
 	

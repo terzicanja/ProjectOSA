@@ -30,6 +30,25 @@ public class CommentService implements CommentServiceInterface {
 	}
 	
 	@Override
+    public List<Comment> findAllByPost_IdOrderByDate(Integer id) {
+        return commentRepository.findAllByPost_IdOrderByDateDesc(id);
+    }
+
+    @Override
+    public List<Comment> findAllByPost_IdOrderByLikes(Integer id) {
+        return commentRepository.findAllByPost_IdOrderByLikesDesc(id);
+    }
+
+    @Override
+    public List<Comment> findAllByPost_IdOrderByDislikes(Integer id) {
+        return commentRepository.findAllByPost_IdOrderByDislikesDesc(id);
+    }
+	
+	
+	
+	
+	
+	@Override
 	public Comment save(Comment comment) {
 		return commentRepository.save(comment);
 	}

@@ -5,6 +5,8 @@ $(document).ready(function(){
 	
 	var token = localStorage.getItem('token');
 	
+	var search = window.location.search.slice(1).split('&')[0].split('=')[1];
+	
 	if(token == null){
 		console.log("token je null");
 		window.location.replace("http://localhost:8080/html/login.html");
@@ -13,26 +15,19 @@ $(document).ready(function(){
 	
 	
 	$.ajax({
-		url: 'http://localhost:8080/api/posts',
+		url: 'http://localhost:8080/api/posts/search/'+search,
 		type: 'GET',
 		headers: {'Authorization': 'Bearer ' + token},
 		contentType: 'application/json',
 		crossDomain: true,
 		dataType: 'json',
 		success:function(data){
-			
 			console.log('postovi su: ' + data);
-			var request = new XMLHttpRequest();
-	        var method = 'GET';
-	        var async = true;
-			
 			for(var i=0; i<data.length; i++){
 //				if(data[i].active==true){
 					$('.posts').append('<div class="post">'+
 							'<div class="pic"></div>'+
-							'<a href="http://localhost:8080/html/profile.html?id='+data[i].user.username+'" class="username">'+
-							data[i].user.username+'</a><br>'+
-							'<p id="date">'+data[i].date+'</p>'+
+							'<a href="#" class="username">username</a><br>'+
 							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title">'+data[i].title+'</a>'+
 							'<div id="img"></div>'+
 						'</div>')
@@ -44,41 +39,12 @@ $(document).ready(function(){
 	
 	
 	
-//	$('.posts').append('<table>'+
-////			'<tr><th>username</th><th>role</th></tr>'+
-//			'<tr><td>'+data[i].title+'</td><td>'+data[i].description+'</td>'+
-////			'<td><input type="button" value="dwnld jks" id="jksbtn" name="'+data[i].id+'"></td>'+
-////			'<td><input type="button" value="dwnld sert" id="certbtn" name="'+data[i].id+'"></td>'+
-////			'<td><button>send email</button></td></tr>'+
-//			''+
-////			"<p>"+data[i].email+"</p>" +
-//					'</table>')
-////}
 	
 	
 	
 	$('#logoutbtn').on('click', function(){
 		localStorage.removeItem('token');
 		location.reload();
-	});
-	
-	$('#location').on('click', function(){
-		var request = new XMLHttpRequest();
-        var method = 'GET';
-        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&sensor=true';
-        var async = true;
-        
-        request.open(method, url, async);
-        request.onreadystatechange = function(){
-          if(request.readyState == 4 && request.status == 200){
-            var data = JSON.parse(request.responseText);
-            var address = data.results[0];
-            console.log(data.results[0]);
-            console.log("adresa je: "+address.formatted_address);
-//            document.write(address.formatted_address);
-          }
-        };
-        request.send();
 	});
 	
 	
@@ -121,43 +87,6 @@ $(document).ready(function(){
 //		}
 //	});
 	
-//	$('#mostPopular, #leastPopular, #newest, #oldest, #alphabeticAuthorReverse, #alphabeticAuthor, #alphabeticReverse, #alphabetic').on('click', function(event){
-//		var sort = $(this).attr('id');
-//		console.log('sortiraj po: '+ sort);
-//		
-//		$('.recommended').empty();
-//		
-//		$.get('HomeServlet', {'sort': sort}, function(data){
-//			console.log(data);
-//			for(v in data.videos){
-//				if(data.loggedInUser == null || (data.loggedInUser.role != 'ADMIN')){
-//					if(data.videos[v].visibility == 'PUBLIC' && data.videos[v].deleted == false && data.videos[v].owner.blocked == false && data.videos[v].owner.deleted == false){
-//						$('.recommended').append('<div id="videoHome">'+
-//								'<div class="thumbnailWrapper">'+
-//									'<a href="video.html?id='+ data.videos[v].id +'"><img src="'+data.videos[v].videoImg+'" id="thumbnail"></a>'+
-//								'</div>'+
-//								'<a href="video.html?id='+ data.videos[v].id +'" id="naslov">' + data.videos[v].name + '</a>'+
-//								'<a href="profile.html?id='+ data.videos[v].owner.username +'" id="user">'+ data.videos[v].owner.username +'</a>'+
-//								'<span id="views">'+ data.videos[v].views +' views</span>'+
-//								'<span id="date">'+ data.videos[v].date +'</span>'+
-//							'</div>')
-//					}
-//				}else if(data.loggedInUser.role == 'ADMIN'){
-//					$('.recommended').append('<div id="videoHome">'+
-//							'<div class="thumbnailWrapper">'+
-//								'<a href="video.html?id='+ data.videos[v].id +'"><img src="'+data.videos[v].videoImg+'" id="thumbnail"></a>'+
-//							'</div>'+
-//							'<a href="video.html?id='+ data.videos[v].id +'" id="naslov">' + data.videos[v].name + '</a>'+
-//							'<a href="profile.html?id='+ data.videos[v].owner.username +'" id="user">'+ data.videos[v].owner.username +'</a>'+
-//							'<span id="views">'+ data.videos[v].views +' views</span>'+
-//							'<span id="date">'+ data.videos[v].date +'</span>'+
-//						'</div>')
-//				}
-//			}
-//			
-//		});
-//		
-//	});
 	
 	
 //	$('#searchbtn').on('click', function(event){

@@ -19,5 +19,7 @@ public interface PostServiceInterface {
 	Post save(Post post);
 	
 	void remove(Integer id);
+	
+	List<Post> findAllBySearch(String text);
 
 }

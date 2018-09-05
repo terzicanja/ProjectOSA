@@ -1,6 +1,7 @@
 package rs.ftn.osa.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,18 @@ public class PostController {
 		}
 		return new ResponseEntity<List<PostDTO>>(postsDTO, HttpStatus.OK);
 	}
+	
+	
+	@GetMapping(value = "/search/{text}")
+    public ResponseEntity<List<PostDTO>> getPostSearched(@PathVariable("text") String text){
+        List<Post> posts = postService.findAllBySearch(text);
+
+        List<PostDTO> postDTOS = new ArrayList<>();
+        for (Post post : posts) {
+            postDTOS.add(new PostDTO(post));
+        }
+        return new ResponseEntity<List<PostDTO>>(postDTOS, HttpStatus.OK);
+    }
 	
 	
 	@GetMapping(value = "/sort/date/asc")
@@ -103,10 +116,13 @@ public class PostController {
 //		u1.setName("test");
 //		u1.setUsername("test1");
 		
+		Date d = new Date();
+		post.setDate(d);
 		post.setTitle(postDTO.getTitle());
 		post.setDescription(postDTO.getDescription());
-		post.setPhoto(postDTO.getPhoto());
-		post.setDate(postDTO.getDate());
+//		post.setPhoto(postDTO.getPhoto());
+		post.setPhoto("");
+//		post.setDate(postDTO.getDate());
 		post.setLikes(postDTO.getLikes());
 		post.setDislikes(postDTO.getDislikes());
 		post.setLongitude(postDTO.getLongitude());

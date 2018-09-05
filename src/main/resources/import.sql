@@ -27,3 +27,7 @@ INSERT INTO post_tags (post_id, tag_id) VALUES (1, 3);
 INSERT INTO post_tags (post_id, tag_id) VALUES (2, 2);
 INSERT INTO post_tags (post_id, tag_id) VALUES (1, 4);
 INSERT INTO post_tags (post_id, tag_id) VALUES (1, 5);
+
+INSERT INTO user_authority (user_id, authority_id) VALUES (1, 2);
+INSERT INTO user_authority (user_id, authority_id) VALUES (2, 1);
+

@@ -1,0 +1,14 @@
+.username{
+	display: inline-block;
+	float: left;
+}
+
+#usern{
+	display: inline;
+}
+
+#img{
+	width: 200px;
+	height: 200px;
+	background-color: grey;
+}

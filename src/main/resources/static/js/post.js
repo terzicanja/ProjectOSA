@@ -15,6 +15,29 @@ $(document).ready(function(){
 	}
 	
 	
+	
+	function myFunction() {
+		document.getElementById("myDropdown").classList.toggle("show");
+	}
+	
+	window.onclick = function(event) {
+		if (!event.target.matches('.dropbtn')) {
+
+			var dropdowns = document
+					.getElementsByClassName("dropdown-content");
+			var i;
+			for (i = 0; i < dropdowns.length; i++) {
+				var openDropdown = dropdowns[i];
+				if (openDropdown.classList.contains('show')) {
+					openDropdown.classList.remove('show');
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 	$.ajax({
 		url: 'http://localhost:8080/api/users/whoami',
 		type: 'GET',
@@ -24,7 +47,7 @@ $(document).ready(function(){
 		dataType: 'json',
 		success:function(loggedin){
 			$('#logovan').append('<p>'+loggedin.username+'</p>');
-			
+			console.log('uloga ulogovanog je: '+loggedin.role);
 			
 //		}
 //	});
@@ -355,6 +378,120 @@ $(document).ready(function(){
 				}
 			});
 		});
+		
+		
+		
+		
+		
+		
+		
+		$('#mostPopular, #leastPopular, #newest, #oldest').on('click', function(event){
+			var sort = $(this).attr('id');
+			console.log('sortiraj po: '+ sort);
+			
+			$('.comments').empty();
+			console.log('tu bi trebalo da obrise sve prethodne');
+			
+			$.ajax({
+				url: 'http://localhost:8080/api/comments/post/order/'+id+'/'+sort,
+				type: 'GET',
+				headers: {'Authorization': 'Bearer ' + token},
+				contentType: 'application/json',
+				crossDomain: true,
+				dataType: 'json',
+				success:function(data){
+					console.log('postovi su: ' + data);
+					
+					console.log('ulogovani lik je: '+loggedin.username);
+					
+		//			$('#title').text(data.title);
+		//			$('#desc').text(data.description);
+					
+					for(var i=0; i<data.length; i++){
+						if(data[i].user.username == loggedin.username){
+							$('.comments').append('<div class="comment">'+
+									'<div class="picComm"></div>'+
+									'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
+									'<div id="titleComm">'+data[i].title+'</div>'+
+									'<div id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
+									'<div id="upvoteBr">'+data[i].likes+'</div>'+
+									'<button id="upvote" name="'+data[i].id+'">up</button>'+
+									'<button id="downvote" name="'+data[i].id+'">down</button>'+
+									'<div id="downvoteBr">'+data[i].dislikes+'</div><br>'+
+									'<button id="edit" name="'+data[i].id+'">edit</button>'+
+									'<button id="delete" name="'+data[i].id+'">delete</button>'+
+								'</div>')
+						}else if(data[i].username!=loggedin.username){
+							$('.comments').append('<div class="comment">'+
+									'<div class="picComm"></div>'+
+									'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
+									'<div id="titleComm">'+data[i].title+'</div>'+
+									'<div id="descComm">'+data[i].description+'</div>'+
+									'<div id="upvoteBr">'+data[i].likes+'</div>'+
+									'<button id="upvote" name="'+data[i].id+'">up</button>'+
+									'<button id="downvote" name="'+data[i].id+'">down</button>'+
+									'<div id="downvoteBr">'+data[i].dislikes+'</div><br>'+
+								'</div>')
+						}
+						
+					}
+				}
+			});
+		});
+		
+		
+		$('#postComment').on('click', function(event){
+			console.log('kliknut post comment');
+			var contentInput = $('#addContent');
+			var content = contentInput.val();
+			var titleInput = $('#addContentTitle');
+			var title = titleInput.val();
+			
+			var comment = {
+					'title': title,
+					'description': content,
+//					'post': id,
+//					'date': '01.01.2111.',
+					'likes': 66,
+					'dislikes': 55,
+					'user': loggedin
+			}
+			
+			$.ajax({
+				url: 'http://localhost:8080/api/comments',
+				type: 'POST',
+				headers: {'Authorization': 'Bearer ' + token},
+				data : JSON.stringify(comment),
+				contentType: 'application/json',
+				crossDomain: true,
+				dataType: 'json',
+				success:function(data){
+					console.log("dodat je novi komentaar");
+					$('#addContent').val('');
+					$('#addContentTitle').val('');
+					location.reload();
+				}
+			});
+			
+			event.preventDefault();
+			return false;
+		});
+		
+		
+		
+		
+		
+		
+		$('#searchbtn').on('click', function(event){
+			var srchinput = $('.srchinput');
+			var search = srchinput.val();
+			console.log('searchujem po: ' + search);
+			
+			window.location.replace('http://localhost:8080/html/search.html?search='+search);
+			
+		});
+		
+		
 		
 		
 		

@@ -44,5 +44,10 @@ public class PostService implements PostServiceInterface {
 	public void remove(Integer id) {
 		postRepository.delete(id);
 	}
+	
+	@Override
+    public List<Post> findAllBySearch(String text) {
+        return postRepository.findAllBySearch(text);
+    }
 
 }

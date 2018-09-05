@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ftn.osa.dto.UserDTO;
+import rs.ftn.osa.entity.Authority;
 import rs.ftn.osa.entity.User;
+import rs.ftn.osa.service.AuthorityServiceInterface;
 import rs.ftn.osa.service.UserServiceInterface;
 
 @RestController
@@ -29,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private UserServiceInterface userService;
+	
+	@Autowired
+    AuthorityServiceInterface authorityServiceInterface;
 	
 	@Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,6 +70,14 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/get/role/{username}")
+    public ResponseEntity<Authority> getRole(@PathVariable String username){
+        User user = userService.findByUsername(username);
+        String role = user.getUser_authorities().iterator().next().getName();
+        Authority authority = authorityServiceInterface.findByName(role);
+        return new ResponseEntity<Authority>(authority,HttpStatus.OK);
+    }
+	
 	
 	@GetMapping(value = "/find/{username}")
 	public ResponseEntity<UserDTO> getUserByUsername(@PathVariable("username") String username){
@@ -88,6 +101,10 @@ public class UserController {
 //		user.setPassword(userDTO.getPassword());
 		user.setPhoto("");
 //		user.setPhoto(userDTO.getPhoto());
+		
+//		User u = userService.findByUsername(username);
+		Authority authority = authorityServiceInterface.findByName("ROLE_COMMENTATOR");
+		user.getUser_authorities().add(authority);
 		
 		System.out.println("ovde pravim novog usera i ovo su podaci: " + userDTO.getUsername() + "i sifra" + userDTO.getPassword());
 		
