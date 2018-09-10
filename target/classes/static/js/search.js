@@ -38,7 +38,14 @@ $(document).ready(function(){
 	});
 	
 	
-	
+	$('#searchbtn').on('click', function(event){
+		var srchinput = $('.srchinput');
+		var search = srchinput.val();
+		console.log('searchujem po: ' + search);
+		
+		window.location.replace('http://localhost:8080/html/search.html?search='+search);
+		
+	});
 	
 	
 	

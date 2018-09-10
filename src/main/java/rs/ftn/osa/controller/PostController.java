@@ -186,12 +186,12 @@ public class PostController {
 		post.setTitle(postDTO.getTitle());
 		post.setDescription(postDTO.getDescription());
 //		post.setPhoto(postDTO.getPhoto());
-		post.setDate(postDTO.getDate());
-		post.setLikes(postDTO.getLikes());
-		post.setDislikes(postDTO.getDislikes());
-		post.setLongitude(postDTO.getLongitude());
-		post.setLatitude(postDTO.getLatitude());
-		post.setUser(userService.findOne(postDTO.getUser().getId()));
+//		post.setDate(postDTO.getDate());
+//		post.setLikes(postDTO.getLikes());
+//		post.setDislikes(postDTO.getDislikes());
+//		post.setLongitude(postDTO.getLongitude());
+//		post.setLatitude(postDTO.getLatitude());
+//		post.setUser(userService.findOne(postDTO.getUser().getId()));
 		
 		post = postService.save(post);
 		return new ResponseEntity<PostDTO>(new PostDTO(post), HttpStatus.CREATED);

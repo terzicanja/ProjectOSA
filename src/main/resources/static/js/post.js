@@ -426,6 +426,127 @@ $(document).ready(function(){
 		
 		
 		
+		$(document).on('click', '#deletePost', function(){
+			console.log('delete posta je kliknut');
+//			var idComm = this.name;
+			console.log('id delete post je: ' + id);
+			
+			var comm = {
+			}
+			
+			$.ajax({
+				url: 'http://localhost:8080/api/posts/'+id,
+				type: 'DELETE',
+				headers: {'Authorization': 'Bearer ' + token},
+//				data : JSON.stringify(),
+				contentType: 'application/xml',
+				crossDomain: true,
+//				dataType: 'json',
+				success:function(data){
+					console.log('obrisan je post OVDE TREBA REDIRECT NA GLAVNU STRANUUUUU' + data);
+				}
+			});
+		});
+		
+		
+		$(document).on('click', '#editPost', function(){
+//			var idComm = this.name;
+			console.log('id edit post je: ' + id);
+			
+			console.log('edit komentara kliknut');
+//			var idComm = this.name;
+//			console.log('id upvote komentara je: ' + idComm);
+			var find = '#title';
+			var old = $(find).text();
+			var desc = '#desc';
+			var oldd = $(desc).text();
+			console.log('stari desc je: '+oldd);
+			$(find).hide();
+			$(desc).hide();
+			$('#title').after('<textarea id="editTitle" maxlength="100">'+old+'</textarea>');
+			$('#desc').after('<textarea id="editDesc" maxlength="100">'+oldd+'</textarea>');
+			var editContent = '#editDesc';
+			$(editContent).after('<button type="button" class="cancelEditPost" id="cancelEditPost">cancel</button>');
+			$(editContent).after('<button type="button" class="confirmEditPost" id="confirmEditPost">confirm</button>');
+			
+			$('.confirmEditPost').on('click', function(event){
+				console.log('potvrdjujem edit posta');
+//				var newId = $(this).attr('name');
+				var newTitle = '#editTitle';
+				var newT = $(newTitle).val();
+				var newDesc = '#editDesc';
+				var newD = $(newDesc).val();
+				
+				
+				var comm = {
+						'title': newT,
+						'description': newD
+				}
+				
+				
+				$.ajax({
+					url: 'http://localhost:8080/api/posts/'+id,
+					type: 'PUT',
+					headers: {'Authorization': 'Bearer ' + token},
+					data : JSON.stringify(comm),
+					contentType: 'application/json',
+					crossDomain: true,
+					dataType: 'json',
+					success:function(data){
+						console.log('editovan je post ' + data);
+//						console.log('editovan je komentar ' + data);
+						$(newTitle).fadeOut();
+						$(newDesc).fadeOut();
+						$(find).fadeIn();
+						$(desc).fadeIn();
+						$(find).text(newT);
+						$(desc).text(newD);
+						var brisi = '#cancelEditPost';
+						var brisi2 = '#confirmEditPost';
+						$(brisi).fadeOut();
+						$(brisi2).fadeOut();
+					}
+				});
+				
+				
+				
+				event.preventDefault();
+				return false;
+			});
+			
+			
+			$('.cancelEditPost').on('click', function(event){
+				console.log('cancel edit');
+//				var contentId = $(this).attr('name');
+				var editT = '#editTitle';
+				var editD = '#editDesc';
+				var cancelEdit = '#cancelEditPost';
+				var confirmEdit = '#confirmEditPost';
+				var findOld = '#title';
+				var findOldD = '#desc';
+				
+				$(editT).remove();
+				$(editD).remove();
+				$(cancelEdit).remove();
+				$(confirmEdit).remove();
+				
+				$(findOld).show();
+				$(findOldD).show();
+				
+				event.preventDefault();
+				return false;
+			});
+			
+			
+			
+			
+		});
+		
+		
+		
+		
+		
+		
 		
 		
 		
