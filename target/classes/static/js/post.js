@@ -63,7 +63,30 @@ $(document).ready(function(){
 			success:function(data){
 				console.log('postovi su: ' + data);
 				
+				var request = new XMLHttpRequest();
+		        var method = 'GET';
+		        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+data.latitude+','+data.longitude+'&sensor=true';
+		        var async = true;
+		        var address;
+		        
+		        request.open(method, url, async);
+		        request.onreadystatechange = function(){
+		          if(request.readyState == 4 && request.status == 200){
+		            var dat = JSON.parse(request.responseText);
+		            address = dat.results[0];
+		            console.log(dat.results[0]);
+		            console.log("adresa je: "+address.address_components[2].long_name);
+		            $('#location').text(address.address_components[2].long_name+', '+address.address_components[5].long_name);
+//		            document.write(address.formatted_address);
+		          }
+		        };
+		        request.send();
+				
+				
+				
+				
 				$('#title').text(data.title);
+				$('#datumPosta').text(data.date);
 				$('#desc').text(data.description);
 				$('#postBy').text(data.user.username);
 				$('#postBy').attr("href", "http://localhost:8080/html/profile.html?id="+data.user.username);
@@ -140,11 +163,12 @@ $(document).ready(function(){
 								'<div class="picComm"></div>'+
 								'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
 								'<div id="titleComm">'+data[i].title+'</div>'+
+								'<div id="dateComm">'+data[i].date+'</div>'+
 								'<div id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
-								'<div id="upvoteBr">'+data[i].likes+'</div>'+
+								'<div id="upvoteBr" name="u'+data[i].id+'">'+data[i].likes+'</div>'+
 								'<button id="upvote" name="'+data[i].id+'">up</button>'+
 								'<button id="downvote" name="'+data[i].id+'">down</button>'+
-								'<div id="downvoteBr">'+data[i].dislikes+'</div><br>'+
+								'<div id="downvoteBr" name="d'+data[i].id+'">'+data[i].dislikes+'</div><br>'+
 								'<button id="edit" name="'+data[i].id+'">edit</button>'+
 								'<button id="delete" name="'+data[i].id+'">delete</button>'+
 							'</div>')
@@ -153,11 +177,12 @@ $(document).ready(function(){
 								'<div class="picComm"></div>'+
 								'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
 								'<div id="titleComm">'+data[i].title+'</div>'+
+								'<div id="dateComm">'+data[i].date+'</div>'+
 								'<div id="descComm">'+data[i].description+'</div>'+
-								'<div id="upvoteBr">'+data[i].likes+'</div>'+
+								'<div id="upvoteBr" name="u'+data[i].id+'">'+data[i].likes+'</div>'+
 								'<button id="upvote" name="'+data[i].id+'">up</button>'+
 								'<button id="downvote" name="'+data[i].id+'">down</button>'+
-								'<div id="downvoteBr">'+data[i].dislikes+'</div><br>'+
+								'<div id="downvoteBr" name="d'+data[i].id+'">'+data[i].dislikes+'</div><br>'+
 							'</div>')
 					}
 					
@@ -198,6 +223,14 @@ $(document).ready(function(){
 				dataType: 'json',
 				success:function(data){
 					console.log('lajkovan je komentar ' + data);
+//					$(".comments").load(window.location.href + " .comments" );
+//					var elements = document.querySelectorAll('input[id^="id_qtedje_"]');
+//					var upvoteBr = document.getElementsByName('u'+idComm);
+////					var upvoteBr = document.getElementById('upvoteBr');
+//				    var number = upvoteBr.innerHTML;
+//				    console.log('ovo je jebeni number: '+number);
+//				    number++;
+//				    upvoteBr.innerHTML = number;
 				}
 			});
 		});
@@ -220,6 +253,10 @@ $(document).ready(function(){
 				dataType: 'json',
 				success:function(data){
 					console.log('dislajkovan je komentar ' + data);
+//					var downvoteBr = document.getElementById('downvoteBr');
+//				    var number = downvoteBr.innerHTML;
+//				    number++;
+//				    downvoteBr.innerHTML = number;
 				}
 			});
 		});
@@ -241,7 +278,11 @@ $(document).ready(function(){
 				crossDomain: true,
 				dataType: 'json',
 				success:function(data){
-					console.log('lajkovan je post ' + data);
+//					console.log('lajkovan je post ' + data);
+					var postUpvoteBr = document.getElementById('postUpvoteBr');
+				    var number = postUpvoteBr.innerHTML;
+				    number++;
+				    postUpvoteBr.innerHTML = number;
 				}
 			});
 		});
@@ -263,7 +304,11 @@ $(document).ready(function(){
 				crossDomain: true,
 				dataType: 'json',
 				success:function(data){
-					console.log('dislajkovan je post ' + data);
+//					console.log('dislajkovan je post ' + data);
+					var postDownvoteBr = document.getElementById('postDownvoteBr');
+				    var number = postDownvoteBr.innerHTML;
+				    number++;
+				    postDownvoteBr.innerHTML = number;
 				}
 			});
 		});
@@ -278,7 +323,7 @@ $(document).ready(function(){
 			var old = $(find).text();
 			console.log('stari komentar je: '+old);
 			$(find).hide();
-			$('#descComm').after('<textarea id="editContent'+idComm+'" maxlength="100">'+old+'</textarea>');
+			$('#dateComm').after('<textarea id="editContent'+idComm+'" maxlength="100">'+old+'</textarea>');
 			var editContent = '#editContent' + idComm;
 			$(editContent).after('<button type="button" class="cancelEdit" id="cancelEdit'+idComm+'" name="'+idComm+'">cancel</button>');
 			$(editContent).after('<button type="button" class="confirmEdit" id="confirmEdit'+idComm+'" name="'+idComm+'">confirm</button>');
@@ -360,21 +405,21 @@ $(document).ready(function(){
 		$(document).on('click', '#delete', function(){
 			console.log('delete komentara je kliknut');
 			var idComm = this.name;
-			console.log('id delete komentara je: ' + id);
+			console.log('id delete komentara je: ' + idComm);
 			
 			var comm = {
 			}
 			
 			$.ajax({
-				url: 'http://localhost:8080/api/posts/downvote/'+id,
-				type: 'PUT',
+				url: 'http://localhost:8080/api/comments/'+idComm,
+				type: 'DELETE',
 				headers: {'Authorization': 'Bearer ' + token},
-				data : JSON.stringify(comm),
-				contentType: 'application/json',
+//				data : JSON.stringify(),
+				contentType: 'application/xml',
 				crossDomain: true,
-				dataType: 'json',
+//				dataType: 'json',
 				success:function(data){
-					console.log('dislajkovan je post ' + data);
+					console.log('obrisan je komentar ' + data);
 				}
 			});
 		});

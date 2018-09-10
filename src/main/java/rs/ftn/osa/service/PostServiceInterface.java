@@ -14,7 +14,9 @@ public interface PostServiceInterface {
 	
 	List<Post> findAllByOrderByDateAsc();
 	
-//	List<Post> findAllByOrderByDateDesc();
+	List<Post> findAllByOrderByLikesDesc();
+	
+	List<Post> findAllByOrderByDislikesDesc();
 	
 	Post save(Post post);
 	

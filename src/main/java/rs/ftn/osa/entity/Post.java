@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,8 +38,12 @@ public class Post implements Serializable {
 	private String description;
 	
 	//nzm dal string ili sta da bude
-	@Column(name = "post_photo")
-	private String photo;
+//	@Column(name = "post_photo")
+//	private String photo;
+	@Lob
+//	@Basic(fetch=LAZY)
+	@Column(name="post_photo", unique=false, nullable=true)
+	private byte[] photo;
 
 	@Column(name = "post_date", unique = false, nullable = false)
 	private Date date;
@@ -152,13 +157,21 @@ public class Post implements Serializable {
 		this.dislikes = dislikes;
 	}
 	
-	public String getPhoto() {
+//	public String getPhoto() {
+//		return photo;
+//	}
+//
+//	public void setPhoto(String photo) {
+//		this.photo = photo;
+//	}
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
+	
 
 	public float getLongitude() {
 		return longitude;

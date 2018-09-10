@@ -1,3 +1,26 @@
+//function previewFile(){
+//				console.log("kliknuo upload");
+//				var preview = document.getElementById('uploaded'); //selects the query named img
+//			    var file = document.querySelector('input[type=file]').files[0]; //sames as here
+//			    var reader = new FileReader();
+//
+//			    reader.onloadend = function () {
+//			       preview.src = reader.result;
+//			    }
+//
+//			    if (file) {
+//			       reader.readAsDataURL(file); //reads the data as a URL
+////			       console.log("nzm tacno sta je ovo: " + reader.readAsDataURL(file));
+//			    } else {
+//			       preview.src = "";
+//			    }
+//			};
+//			
+//			previewFile();
+
+
+
+
 $(document).ready(function(){
 	
 	
@@ -72,6 +95,21 @@ $(document).ready(function(){
 			
 			
 			
+//			var blobFile = $('#filechooser').files[0];
+//		    var formData = new FormData();
+//		    formData.append("fileToUpload", blobFile);
+//
+//		    $.ajax({
+//		       url: "upload.php",
+//		       type: "POST",
+//		       data: formData,
+//		       processData: false,
+//		       contentType: false,
+//		       success: function(response) {
+//		           // .. do something
+//		       }
+//		    });
+			
 			
 			
 			
@@ -82,6 +120,10 @@ $(document).ready(function(){
 				var titleInput = $('#addPostTitle');
 				var title = titleInput.val();
 				
+//				var blobFile = $('#upload')[0].files[0];
+//			    var formData = new FormData();
+//			    formData.append("fileToUpload", blobFile);
+				
 				var post = {
 						'title': title,
 						'description': content,
@@ -91,7 +133,9 @@ $(document).ready(function(){
 						'dislikes': 55,
 						'user': loggedin,
 						'longitude': long,
+//						'photo': formData,
 						'latitude': lat
+						
 				}
 				
 				$.ajax({
@@ -116,7 +160,27 @@ $(document).ready(function(){
 			
 			
 			
-			
+//			function previewFile(){
+//			$('#upload').on('click', function(){
+//			function previewFile(){
+//				console.log("kliknuo upload");
+//				var preview = document.getElementById('uploaded'); //selects the query named img
+//			    var file = document.querySelector('input[type=file]').files[0]; //sames as here
+//			    var reader = new FileReader();
+//
+//			    reader.onloadend = function () {
+//			       preview.src = reader.result;
+//			    }
+//
+//			    if (file) {
+//			       reader.readAsDataURL(file); //reads the data as a URL
+//			       console.log("nzm tacno sta je ovo: " + reader.readAsDataURL(file));
+//			    } else {
+//			       preview.src = "";
+//			    }
+//			};
+//			
+//			previewFile(); 
 			
 			
 			

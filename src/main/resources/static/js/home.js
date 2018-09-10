@@ -56,6 +56,49 @@ $(document).ready(function(){
 ////}
 	
 	
+	$('#mostPopular, #leastPopular, #newest, #oldest').on('click', function(event){
+		var sort = $(this).attr('id');
+		console.log('sortiraj postove po: '+ sort);
+		
+		$('.posts').empty();
+//		console.log('tu bi trebalo da obrise sve prethodne');
+		
+		$.ajax({
+			url: 'http://localhost:8080/api/posts/sort/'+sort,
+			type: 'GET',
+			headers: {'Authorization': 'Bearer ' + token},
+			contentType: 'application/json',
+			crossDomain: true,
+			dataType: 'json',
+			success:function(datao){
+				console.log('postovi su: ' + datao);
+				
+//				console.log('ulogovani lik je: '+loggedin.username);
+				
+	//			$('#title').text(data.title);
+	//			$('#desc').text(data.description);
+				
+				for(var i=0; i<datao.length; i++){
+//					if(data[i].active==true){
+						$('.posts').append('<div class="post">'+
+								'<div class="pic"></div>'+
+								'<a href="http://localhost:8080/html/profile.html?id='+datao[i].user.username+'" class="username">'+
+								datao[i].user.username+'</a><br>'+
+								'<p id="date">'+datao[i].date+'</p>'+
+								'<a href="http://localhost:8080/html/post.html?id='+datao[i].id+'" id="title">'+datao[i].title+'</a>'+
+								'<div id="img"></div>'+
+							'</div>')
+//					}
+					
+				}
+			}
+		});
+	});
+	
+	
+	
+	
+	
 	
 	$('#logoutbtn').on('click', function(){
 		localStorage.removeItem('token');
@@ -158,6 +201,16 @@ $(document).ready(function(){
 //		});
 //		
 //	});
+	
+	
+	$('#searchbtn').on('click', function(event){
+		var srchinput = $('.srchinput');
+		var search = srchinput.val();
+		console.log('searchujem po: ' + search);
+		
+		window.location.replace('http://localhost:8080/html/search.html?search='+search);
+		
+	});
 	
 	
 //	$('#searchbtn').on('click', function(event){

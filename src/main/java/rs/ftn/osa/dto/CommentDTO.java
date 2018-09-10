@@ -3,6 +3,8 @@ package rs.ftn.osa.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import rs.ftn.osa.entity.Comment;
 
 public class CommentDTO implements Serializable {
@@ -10,6 +12,7 @@ public class CommentDTO implements Serializable {
 	private Integer id;
 	private String title;
 	private String description;
+	@JsonFormat(pattern="dd.MM.yyyy HH:mm")
 	private Date date;
 	private Integer likes;
 	private Integer dislikes;

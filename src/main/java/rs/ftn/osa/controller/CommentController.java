@@ -108,8 +108,8 @@ public class CommentController {
 		Date d = new Date();
 		comment.setDate(d);
 //		comment.setDate(commentDTO.getDate());
-		comment.setLikes(commentDTO.getLikes());
-		comment.setDislikes(commentDTO.getDislikes());
+		comment.setLikes(0);
+		comment.setDislikes(0);
 //		comment.setPost(postService.findOne(commentDTO.getPost().getId()));
 		comment.setUser(userService.findOne(commentDTO.getUser().getId()));
 //		comment.setUser(u1);

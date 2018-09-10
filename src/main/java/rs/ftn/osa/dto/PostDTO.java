@@ -3,6 +3,8 @@ package rs.ftn.osa.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import rs.ftn.osa.entity.Post;
 
 public class PostDTO implements Serializable {
@@ -10,7 +12,9 @@ public class PostDTO implements Serializable {
 	private Integer id;
 	private String title;
 	private String description;
-	private String photo;
+//	private String photo;
+	private byte[] photo;
+	@JsonFormat(pattern="dd.MM.yyyy")
 	private Date date;
 	private Integer likes;
 	private Integer dislikes;
@@ -22,7 +26,7 @@ public class PostDTO implements Serializable {
 		super();
 	}
 
-	public PostDTO(Integer id, String title, String description, String photo, Date date, Integer likes,
+	public PostDTO(Integer id, String title, String description, byte[] photo, Date date, Integer likes,
 			Integer dislikes, float longitude, float latitude, UserDTO user) {
 		super();
 		this.id = id;
@@ -68,11 +72,11 @@ public class PostDTO implements Serializable {
 		this.description = description;
 	}
 
-	public String getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 

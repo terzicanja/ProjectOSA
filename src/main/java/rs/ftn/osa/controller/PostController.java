@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ftn.osa.dto.CommentDTO;
 import rs.ftn.osa.dto.PostDTO;
 import rs.ftn.osa.dto.TagDTO;
+import rs.ftn.osa.entity.Comment;
 import rs.ftn.osa.entity.Post;
 import rs.ftn.osa.entity.Tag;
 import rs.ftn.osa.entity.User;
@@ -62,9 +64,25 @@ public class PostController {
     }
 	
 	
-	@GetMapping(value = "/sort/date/asc")
-	public ResponseEntity<List<PostDTO>> getPostsDateAsc(){
-		List<Post> posts = postService.findAllByOrderByDateAsc();
+	@GetMapping(value = "/sort/{by}")
+	public ResponseEntity<List<PostDTO>> getPostsDateAsc(@PathVariable("by") String orderBy){
+		List<Post> posts = null;
+//		List<Post> posts = postService.findAllByOrderByDateAsc();
+		if(orderBy.equals("oldest")){
+          posts = postService.findAllByOrderByDateAsc();
+		}else if(orderBy.equals("newest")){
+			posts = postService.findAllByOrderByDateDesc();
+		}else if(orderBy.equals("mostPopular")){
+			posts = postService.findAllByOrderByLikesDesc();
+		}else if(orderBy.equals("leastPopular")){
+			posts = postService.findAllByOrderByDislikesDesc();
+		}
+//		List<CommentDTO>commentDTOS = new ArrayList<>();
+//		for (Post comment : posts) {
+//          commentDTOS.add(new CommentDTO(comment));
+//		}
+		
+		
 		List<PostDTO> postsDTO = new ArrayList<PostDTO>();
 		for(Post p : posts) {
 			postsDTO.add(new PostDTO(p));
@@ -76,6 +94,28 @@ public class PostController {
 	@GetMapping(value = "/sort/date/desc")
 	public ResponseEntity<List<PostDTO>> getPostsDateDesc(){
 		List<Post> posts = postService.findAllByOrderByDateDesc();
+		List<PostDTO> postsDTO = new ArrayList<PostDTO>();
+		for(Post p : posts) {
+			postsDTO.add(new PostDTO(p));
+		}
+		return new ResponseEntity<List<PostDTO>>(postsDTO, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/sort/likes")
+	public ResponseEntity<List<PostDTO>> getPostsMostLiked(){
+		List<Post> posts = postService.findAllByOrderByLikesDesc();
+		List<PostDTO> postsDTO = new ArrayList<PostDTO>();
+		for(Post p : posts) {
+			postsDTO.add(new PostDTO(p));
+		}
+		return new ResponseEntity<List<PostDTO>>(postsDTO, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/sort/dislikes")
+	public ResponseEntity<List<PostDTO>> getPostsMostDisliked(){
+		List<Post> posts = postService.findAllByOrderByDislikesDesc();
 		List<PostDTO> postsDTO = new ArrayList<PostDTO>();
 		for(Post p : posts) {
 			postsDTO.add(new PostDTO(p));
@@ -121,10 +161,10 @@ public class PostController {
 		post.setTitle(postDTO.getTitle());
 		post.setDescription(postDTO.getDescription());
 //		post.setPhoto(postDTO.getPhoto());
-		post.setPhoto("");
+//		post.setPhoto("");
 //		post.setDate(postDTO.getDate());
-		post.setLikes(postDTO.getLikes());
-		post.setDislikes(postDTO.getDislikes());
+		post.setLikes(0);
+		post.setDislikes(0);
 		post.setLongitude(postDTO.getLongitude());
 		post.setLatitude(postDTO.getLatitude());
 //		post.setUser(u1);
@@ -145,7 +185,7 @@ public class PostController {
 		
 		post.setTitle(postDTO.getTitle());
 		post.setDescription(postDTO.getDescription());
-		post.setPhoto(postDTO.getPhoto());
+//		post.setPhoto(postDTO.getPhoto());
 		post.setDate(postDTO.getDate());
 		post.setLikes(postDTO.getLikes());
 		post.setDislikes(postDTO.getDislikes());
