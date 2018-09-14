@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/stil.css">
 		<link rel="stylesheet" type="text/css" href="../../css/home.css">
 		<link rel="stylesheet" type="text/css" href="../../css/profile.css">
-		<link rel="stylesheet" type="text/css" href="../../css/post.css">
+		<link rel="stylesheet" type="text/css" href="../../css/edit.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script src="../jquery-3.2.1.js"></script>
 		<script src="../js/script.js"></script>
@@ -19,10 +19,10 @@
 		<header>
 			<div id="header">
 			<!-- 	<a href="#"><i class="material-icons" id="menubtn">menu</i></a> -->
-				<a href="#">Home</a>
-				<a href="#">Notification</a>
-				<a href="#">Messages</a>
-				<a href="home.html"><img src="images/logoo.png" id="logo"></a>
+				<a href="http://localhost:8080">Home</a>
+				<!-- <a href="#">Notification</a>
+				<a href="#">Messages</a> -->
+				<!-- <a href="home.html"><img src="images/logoo.png" id="logo"></a> -->
 				<div id="sign"></div>
 				<a href="#"><img src="images/profile.png" id="profilbtn"></a>
 	
@@ -30,11 +30,11 @@
 					<input type="search" placeholder='Search...' class='srchinput'></input>
 					<a href="#"><i class="material-icons" id="searchbtn">search</i></a>
 				</div>
-				<a href="#">Profile</a>
-				<a href="#">Create</a>
-				<a href="html/login.html">login</a>
+				<a href="#" id="me">Profile</a>
+				<a href="http://localhost:8080/html/newpost.html">Create post</a>
+				<a href="http://localhost:8080/html/login.html">login</a>
 				<a href="#" id="logoutbtn">logout</a>
-				<a href="../html/register.html">register</a>
+				<a href="http://localhost:8080/html/register.html">register</a>
 			</div>
 		</header>
 		
@@ -44,20 +44,13 @@
 				<div id="logovan">
 				</div>
 			</div>
-			<div class="posts">
-			<input type="text" name="nameEdit" placeholder="name">
-			<input type="text" name="usernameEdit" placeholder="username">
-			<input type="password" name="passwordEdit" placeholder="pass">
-			<button id="editbtn">edit</button>
-				<div class="post">
-					<div class="pic"></div>
-					<a href="#" class="username" id="postBy">username</a><br>
-					<div id="usern">korisniiik</div>
-					<div id="img"></div>
-				</div>
+			<div class="edit">
+				<input id="ime" type="text" name="nameEdit" placeholder="name">
+				<input id="korisnicko" type="text" name="usernameEdit" placeholder="username">
+				<input id="lozinka" type="password" name="passwordEdit" placeholder="pass">
+				<input type="file" id="upload" onchange="previewFile()">
+				<button id="editbtn">edit</button>
 				
-				<div class="comments">
-				</div>
 			</div>
 			<div class="rightboard">
 				-----------------------

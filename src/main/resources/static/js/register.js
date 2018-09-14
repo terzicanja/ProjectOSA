@@ -4,16 +4,19 @@ $(document).ready(function(){
 	$('#registerbtn').on('click', function(event){
 		
 		console.log('kliknuto dugme');
+		var nameInput = $("input[name='ime']");
 		var userNameInput = $("input[name='username']");
 		var passwordInput = $("input[name='password']");
-		var username=userNameInput.val();
-		var password=passwordInput.val();
+		var name = userNameInput.val();
+		var username = userNameInput.val();
+		var password = passwordInput.val();
 		console.log("username i pass su: "+username+password)
 		
 		
 		var blobFile = $('#upload')[0].files[0];
 		
 		var user = {
+				'name': name
 				'username': username,
 				'password': password
 		}

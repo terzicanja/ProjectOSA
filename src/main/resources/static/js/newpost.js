@@ -61,6 +61,7 @@ $(document).ready(function(){
 		success:function(loggedin){
 			$('#logovan').append('<p>'+loggedin.username+'</p>');
 			console.log('uloga ulogovanog je: '+loggedin.role);
+			$("#me").attr("href", "http://localhost:8080/html/profile.html?id="+loggedin.username);
 			
 //			var contentInput = $('#addContent');
 //			var content = contentInput.val();
@@ -77,20 +78,24 @@ $(document).ready(function(){
 //					'user': loggedin
 //			}
 //			
-//			$.ajax({
-//				url: 'http://localhost:8080/api/posts/create',
-//				type: 'POST',
-//				headers: {'Authorization': 'Bearer ' + token},
-//				contentType: 'application/json',
+			$.ajax({
+				url: 'http://localhost:8080/api/tags',
+				type: 'GET',
+				headers: {'Authorization': 'Bearer ' + token},
+				contentType: 'application/json',
 //				data : JSON.stringify(post),
-//				crossDomain: true,
-//				dataType: 'json',
-//				success:function(loggedin){
-//					console.log("uspesno napravljen post");
-//					
-//			
-//				}
-//			});
+				crossDomain: true,
+				dataType: 'json',
+				success:function(d){
+					console.log("znaci vamo tagove sve citam");
+					console.log(d);
+					
+					for(var i=0; i<d.length; i++){
+						$('#uploaded').after('<input type="checkbox" name="tags" value="'+d[i].id+'">'+d[i].name+'<br>');
+					}
+					
+				}
+			});
 			
 			
 			
@@ -152,28 +157,77 @@ $(document).ready(function(){
 //						$('#addContentTitle').val('');
 //						location.reload();
 						
-						var data = new FormData();
-						data.append("id", datap.id);
-						data.append("photo", blobFile);
 						
-						$.ajax({
-							url: 'http://localhost:8080/api/posts/photo',
-							type: 'POST',
-							headers: {'Authorization': 'Bearer ' + token},
-//							data : JSON.stringify(post),
-							data : data,
-							contentType: false,
-							processData: false,
-							crossDomain: true,
-//							dataType: 'json',
-							success:function(datap){
-								console.log("dodata je slikaaaa");
-//								
-							},
-							error: function (jqXHR, textStatus, errorThrown) {  
-								alert(textStatus);
+						
+						var checkboxes = document.getElementsByName('tags');
+						var checkboxesChecked = [];
+						for (var i=0; i<checkboxes.length; i++) {
+							if (checkboxes[i].checked) {
+								
+								
+								$.ajax({
+									url: 'http://localhost:8080/api/posts/tags/'+datap.id+'/'+checkboxes[i].value,
+									type: 'POST',
+									headers: {'Authorization': 'Bearer ' + token},
+//									data : JSON.stringify(post),
+//									data : data,
+									contentType: 'application/json',
+//									processData: false,
+									crossDomain: true,
+//									dataType: 'json',
+									success:function(datap){
+										console.log("dodati su tagovi na post");
+//										
+									},
+									error: function (jqXHR, textStatus, errorThrown) {  
+										alert(textStatus);
+									}
+								});
+								
+								
+								
+								
+								
+								checkboxesChecked.push(checkboxes[i].value);
 							}
-						});
+						}
+						console.log("ovo su chekovani: " + checkboxesChecked);
+						console.log(checkboxesChecked);
+						
+						
+						
+						
+						
+						
+						if(blobFile == null){
+							console.log("blob je prazan");
+//							window.location.replace("http://localhost:8080/");
+						}else{
+							var data = new FormData();
+							data.append("id", datap.id);
+							data.append("photo", blobFile);
+							
+							$.ajax({
+								url: 'http://localhost:8080/api/posts/photo',
+								type: 'POST',
+								headers: {'Authorization': 'Bearer ' + token},
+//								data : JSON.stringify(post),
+								data : data,
+								contentType: false,
+								processData: false,
+								crossDomain: true,
+//								dataType: 'json',
+								success:function(datap){
+									console.log("dodata je slikaaaa");
+//									
+								},
+								error: function (jqXHR, textStatus, errorThrown) {  
+									alert(textStatus);
+								}
+							});
+						}
+						
+						
 						
 					}
 				});

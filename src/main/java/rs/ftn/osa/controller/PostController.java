@@ -192,6 +192,26 @@ public class PostController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/tags/{post}/{tag}")
+	public ResponseEntity<PostDTO> addTags(@PathVariable("post") int postId, @PathVariable("tag") int tagId){
+		Post p = postService.findOne(postId);
+		Tag t = tagService.findOne(tagId);
+		
+		if(p != null && t != null) {
+			p.getTags().add(t);
+			t.getPosts().add(p);
+			p = postService.save(p);
+			t = tagService.save(t);
+			return new ResponseEntity<PostDTO>(new PostDTO(p), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<PostDTO>(HttpStatus.BAD_REQUEST);
+		}
+		
+//		p = postService.save(p);
+//		return new ResponseEntity<PostDTO>(new PostDTO(p), HttpStatus.OK);
+	}
+	
+	
 	
 	@PutMapping(value = "/{id}", consumes = "application/json")
 	public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable("id") Integer id){

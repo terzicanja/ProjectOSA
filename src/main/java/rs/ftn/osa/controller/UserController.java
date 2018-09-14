@@ -97,13 +97,10 @@ public class UserController {
 	public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO){
 		User user = new User();
 //		user.setName(userDTO.getName());
-		user.setName("test");
+		user.setName(userDTO.getName());
 		user.setUsername(userDTO.getUsername());
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
 		user.setPassword(bc.encode(userDTO.getPassword()));
-//		user.setPassword(userDTO.getPassword());
-//		user.setPhoto("");
-//		user.setPhoto(userDTO.getPhoto());
 		
 //		User u = userService.findByUsername(username);
 		Authority authority = authorityServiceInterface.findByName("ROLE_COMMENTATOR");

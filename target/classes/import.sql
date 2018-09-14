@@ -1,5 +1,5 @@
 INSERT INTO users (user_username, user_password, user_name) VALUES ('a', '$2a$10$yS7pAhT6AVZUhW27So8NA.CQGybqWN4e5g8XV0/QQvw07lDqyH81y', 'Anja');
-INSERT INTO users (user_username, user_password, user_name) VALUES ('b', 'b', 'Bbb');
+INSERT INTO users (user_username, user_password, user_name) VALUES ('b', '$2a$10$yS7pAhT6AVZUhW27So8NA.CQGybqWN4e5g8XV0/QQvw07lDqyH81y', 'Bbb');
 
 INSERT INTO authority (name) VALUES ('ROLE_USER');
 INSERT INTO authority (name) VALUES ('ROLE_ADMIN');

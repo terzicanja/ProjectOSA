@@ -25,6 +25,7 @@ $(document).ready(function(){
 		success:function(loggedin){
 			$('#logovan').append('<p>'+loggedin.username+'</p>');
 //			console.log('uloga ulogovanog je: '+loggedin.role);
+			$("#me").attr("href", "http://localhost:8080/html/profile.html?id="+loggedin.username);
 			
 			$.ajax({
 				url: 'http://localhost:8080/api/users/get/role/'+loggedin.username,

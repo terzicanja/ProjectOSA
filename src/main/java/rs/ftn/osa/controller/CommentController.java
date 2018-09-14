@@ -73,8 +73,10 @@ public class CommentController {
 	@GetMapping(value = "/post/order/{id}/{orderBy}")
     public ResponseEntity<List<CommentDTO>> getCommentsByPostOrdered(@PathVariable("id")Integer id,@PathVariable("orderBy") String orderBy){
         List<Comment> comments = null;
-        if(orderBy.equals("date")){
-//            comments = commentService.findAllByPost_IdOrderByDate(id);
+        if(orderBy.equals("newest")){
+            comments = commentService.findAllByPost_IdOrderByDateDesc(id);
+        }else if(orderBy.equals("oldest")){
+            comments = commentService.findAllByPost_IdOrderByDateAsc(id);
         }else if(orderBy.equals("mostPopular")){
             comments = commentService.findAllByPost_IdOrderByLikes(id);
         }else if(orderBy.equals("leastPopular")){
@@ -100,6 +102,7 @@ public class CommentController {
 		u1.setId(2);
 		Post p1 = new Post();
 		p1.setId(1);
+		Post p = postService.findOne(commentDTO.getPost().getId());
 		
 		
 		comment.setTitle(commentDTO.getTitle());
@@ -107,13 +110,12 @@ public class CommentController {
 		//msm da vamo treba staviti trenutno vreme
 		Date d = new Date();
 		comment.setDate(d);
-//		comment.setDate(commentDTO.getDate());
 		comment.setLikes(0);
 		comment.setDislikes(0);
 //		comment.setPost(postService.findOne(commentDTO.getPost().getId()));
 		comment.setUser(userService.findOne(commentDTO.getUser().getId()));
 //		comment.setUser(u1);
-		comment.setPost(p1);
+		comment.setPost(p);
 		
 		comment = commentService.save(comment);
 		return new ResponseEntity<CommentDTO>(new CommentDTO(comment), HttpStatus.CREATED);

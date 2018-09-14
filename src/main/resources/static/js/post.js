@@ -48,6 +48,7 @@ $(document).ready(function(){
 		success:function(loggedin){
 			$('#logovan').append('<p>'+loggedin.username+'</p>');
 			console.log('uloga ulogovanog je: '+loggedin.role);
+			$("#me").attr("href", "http://localhost:8080/html/profile.html?id="+loggedin.username);
 			
 //		}
 //	});
@@ -139,18 +140,48 @@ $(document).ready(function(){
 				
 				
 				
-	//			for(var i=0; i<data.length; i++){
-	////				if(data[i].active==true){
-	//					$('#tags').append('<a href="#" class="tag">'+data[i].id+'</a>'+
-	//							'<div class="pic"></div>'+
-	//							'<a href="#" class="username">username</a><br>'+
-	//							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title">'+data[i].title+'</a>'+
-	//							'<div id="img"></div>'+
-	//							'<div id="tags">Tagovi: </div>'+
-	//						'</div>')
-	////				}
-	//				
-	////			}
+				
+				
+				$('#postComment').on('click', function(event){
+					console.log('kliknut post comment');
+					var contentInput = $('#addContent');
+					var content = contentInput.val();
+					var titleInput = $('#addContentTitle');
+					var title = titleInput.val();
+					
+					var comment = {
+							'title': title,
+							'description': content,
+							'post': data,
+//							'date': '01.01.2111.',
+							'likes': 66,
+							'dislikes': 55,
+							'user': loggedin
+					}
+					
+					$.ajax({
+						url: 'http://localhost:8080/api/comments',
+						type: 'POST',
+						headers: {'Authorization': 'Bearer ' + token},
+						data : JSON.stringify(comment),
+						contentType: 'application/json',
+						crossDomain: true,
+						dataType: 'json',
+						success:function(data){
+							console.log("dodat je novi komentaar");
+							$('#addContent').val('');
+							$('#addContentTitle').val('');
+							location.reload();
+						}
+					});
+					
+					event.preventDefault();
+					return false;
+				});
+				
+				
+				
+				
 			}
 		});
 		
@@ -162,7 +193,7 @@ $(document).ready(function(){
 			crossDomain: true,
 			dataType: 'json',
 			success:function(data){
-				console.log('postovi su: ' + data);
+				console.log(data);
 				
 				console.log('ulogovani lik je: '+loggedin.username);
 				
@@ -172,7 +203,7 @@ $(document).ready(function(){
 				for(var i=0; i<data.length; i++){
 					if(data[i].user.username == loggedin.username){
 						$('.comments').append('<div class="comment">'+
-								'<div class="picComm"></div>'+
+								'<img class="picComm" id="picComm" src="data:image/gif;base64,'+data[i].user.photo+'">'+
 								'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
 								'<div id="titleComm">'+data[i].title+'</div>'+
 								'<div id="dateComm">'+data[i].date+'</div>'+
@@ -201,20 +232,6 @@ $(document).ready(function(){
 				}
 			}
 		});
-		
-		
-		
-		
-	//	$('.posts').append('<table>'+
-	////			'<tr><th>username</th><th>role</th></tr>'+
-	//			'<tr><td>'+data[i].title+'</td><td>'+data[i].description+'</td>'+
-	////			'<td><input type="button" value="dwnld jks" id="jksbtn" name="'+data[i].id+'"></td>'+
-	////			'<td><input type="button" value="dwnld sert" id="certbtn" name="'+data[i].id+'"></td>'+
-	////			'<td><button>send email</button></td></tr>'+
-	//			''+
-	////			"<p>"+data[i].email+"</p>" +
-	//					'</table>')
-	////}
 		
 		
 		$(document).on('click', '#upvote', function(){
@@ -591,6 +608,7 @@ $(document).ready(function(){
 									'<div class="picComm"></div>'+
 									'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
 									'<div id="titleComm">'+data[i].title+'</div>'+
+									'<div id="dateComm">'+data[i].date+'</div>'+
 									'<div id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
 									'<div id="upvoteBr">'+data[i].likes+'</div>'+
 									'<button id="upvote" name="'+data[i].id+'">up</button>'+
@@ -604,6 +622,7 @@ $(document).ready(function(){
 									'<div class="picComm"></div>'+
 									'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
 									'<div id="titleComm">'+data[i].title+'</div>'+
+									'<div id="dateComm">'+data[i].date+'</div>'+
 									'<div id="descComm">'+data[i].description+'</div>'+
 									'<div id="upvoteBr">'+data[i].likes+'</div>'+
 									'<button id="upvote" name="'+data[i].id+'">up</button>'+
@@ -618,42 +637,42 @@ $(document).ready(function(){
 		});
 		
 		
-		$('#postComment').on('click', function(event){
-			console.log('kliknut post comment');
-			var contentInput = $('#addContent');
-			var content = contentInput.val();
-			var titleInput = $('#addContentTitle');
-			var title = titleInput.val();
-			
-			var comment = {
-					'title': title,
-					'description': content,
+//		$('#postComment').on('click', function(event){
+//			console.log('kliknut post comment');
+//			var contentInput = $('#addContent');
+//			var content = contentInput.val();
+//			var titleInput = $('#addContentTitle');
+//			var title = titleInput.val();
+//			
+//			var comment = {
+//					'title': title,
+//					'description': content,
 //					'post': id,
-//					'date': '01.01.2111.',
-					'likes': 66,
-					'dislikes': 55,
-					'user': loggedin
-			}
-			
-			$.ajax({
-				url: 'http://localhost:8080/api/comments',
-				type: 'POST',
-				headers: {'Authorization': 'Bearer ' + token},
-				data : JSON.stringify(comment),
-				contentType: 'application/json',
-				crossDomain: true,
-				dataType: 'json',
-				success:function(data){
-					console.log("dodat je novi komentaar");
-					$('#addContent').val('');
-					$('#addContentTitle').val('');
-					location.reload();
-				}
-			});
-			
-			event.preventDefault();
-			return false;
-		});
+////					'date': '01.01.2111.',
+//					'likes': 66,
+//					'dislikes': 55,
+//					'user': loggedin
+//			}
+//			
+//			$.ajax({
+//				url: 'http://localhost:8080/api/comments',
+//				type: 'POST',
+//				headers: {'Authorization': 'Bearer ' + token},
+//				data : JSON.stringify(comment),
+//				contentType: 'application/json',
+//				crossDomain: true,
+//				dataType: 'json',
+//				success:function(data){
+//					console.log("dodat je novi komentaar");
+//					$('#addContent').val('');
+//					$('#addContentTitle').val('');
+//					location.reload();
+//				}
+//			});
+//			
+//			event.preventDefault();
+//			return false;
+//		});
 		
 		
 		
