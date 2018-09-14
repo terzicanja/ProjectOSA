@@ -36,8 +36,9 @@ public class User implements Serializable, UserDetails {
 	@Column(name = "user_password", unique = false, nullable = false)
 	private String password;
 	
-	@Column(name = "user_photo")
-	private String photo;
+	@Lob
+	@Column(name = "user_photo", unique = false, nullable = true)
+	private byte[] photo;
 	
 	@ManyToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinTable(name="user_authority",
@@ -111,11 +112,11 @@ public class User implements Serializable, UserDetails {
 		this.password = password;
 	}
 	
-	public String getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 	

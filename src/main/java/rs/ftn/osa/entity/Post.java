@@ -42,7 +42,7 @@ public class Post implements Serializable {
 //	private String photo;
 	@Lob
 //	@Basic(fetch=LAZY)
-	@Column(name="post_photo", unique=false, nullable=true)
+	@Column(name = "post_photo", unique = false, nullable = true)
 	private byte[] photo;
 
 	@Column(name = "post_date", unique = false, nullable = false)

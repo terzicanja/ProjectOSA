@@ -53,16 +53,39 @@ $(document).ready(function(){
 								if(data.authority == 'ROLE_ADMIN'){
 									$('#usern').after('<p>uloga korisnika je: '+dat.authority+'</p>');
 								}
-								
-						
 							}
 						});
-						
-						
 					}
-					
 				}
 			});
+			
+			
+			
+			$.ajax({
+				url: 'http://localhost:8080/api/users/find/'+id,
+				type: 'GET',
+				headers: {'Authorization': 'Bearer ' + token},
+				contentType: 'application/json',
+				crossDomain: true,
+				dataType: 'json',
+				success:function(dat){
+					console.log(dat);
+					$('#postBy').text(dat.username);
+					$('#usern').text(dat.name);
+					
+					var userPhoto;
+					if(dat.photo !=null){
+						userPhoto = 'data:image/gif;base64,'+dat.photo;
+					}
+					$("#pic").attr("src", userPhoto);
+					
+					if(dat.username == loggedin.username){
+						console.log('gledam svoj profiiiil');
+						$('#usern').after('<a href="http://localhost:8080/html/edit.html?id='+dat.username+'" class="usernameComm">edit profile</a>');
+					}
+				}
+			});
+			
 			
 		
 		

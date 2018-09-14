@@ -10,7 +10,7 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script src="../jquery-3.2.1.js"></script>
 		<script src="../js/script.js"></script>
-		<script src="../js/profile.js"></script>
+		<script src="../js/edit.js"></script>
 		<script src="../js/login.js"></script>
 		<title>Profile</title>
 	</head>
@@ -45,11 +45,14 @@
 				</div>
 			</div>
 			<div class="posts">
-				<img class="pic" id="pic" src="">
-				<a href="#" class="username" id="postBy">username</a><br>
-				<div id="usern">korisniiik</div>
+			<input type="text" name="nameEdit" placeholder="name">
+			<input type="text" name="usernameEdit" placeholder="username">
+			<input type="password" name="passwordEdit" placeholder="pass">
+			<button id="editbtn">edit</button>
 				<div class="post">
-					
+					<div class="pic"></div>
+					<a href="#" class="username" id="postBy">username</a><br>
+					<div id="usern">korisniiik</div>
 					<div id="img"></div>
 				</div>
 				
@@ -57,18 +60,7 @@
 				</div>
 			</div>
 			<div class="rightboard">
-				<div class="comments">
-					<div class="comment">
-						<div class="picComm"></div>
-						<a href="#" class="usernameComm">username</a><br>
-						<div id="titleComm">naslov</div>
-						<div id="descComm">tekst tekst</div>
-						<div id="upvoteBr">2</div>
-						<button id="upvote">up</button>
-						<button id="downvote">down</button>
-						<div id="downvoteBr">2</div><br>
-					</div>
-				</div>
+				-----------------------
 			</div>
 		</div>
 		

@@ -10,13 +10,13 @@ public class UserDTO implements Serializable {
 	private String name;
 	private String username;
 	private String password;
-	private String photo;
+	private byte[] photo;
 	
 	public UserDTO() {
 		super();
 	}
 
-	public UserDTO(Integer id, String name, String username, String password, String photo) {
+	public UserDTO(Integer id, String name, String username, String password, byte[] photo) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -61,11 +61,11 @@ public class UserDTO implements Serializable {
 		this.password = password;
 	}
 
-	public String getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 

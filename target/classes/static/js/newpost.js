@@ -120,7 +120,7 @@ $(document).ready(function(){
 				var titleInput = $('#addPostTitle');
 				var title = titleInput.val();
 				
-//				var blobFile = $('#upload')[0].files[0];
+				var blobFile = $('#upload')[0].files[0];
 //			    var formData = new FormData();
 //			    formData.append("fileToUpload", blobFile);
 				
@@ -146,11 +146,35 @@ $(document).ready(function(){
 					contentType: 'application/json',
 					crossDomain: true,
 					dataType: 'json',
-					success:function(data){
+					success:function(datap){
 						console.log("dodat je novi poooost");
 //						$('#addContent').val('');
 //						$('#addContentTitle').val('');
 //						location.reload();
+						
+						var data = new FormData();
+						data.append("id", datap.id);
+						data.append("photo", blobFile);
+						
+						$.ajax({
+							url: 'http://localhost:8080/api/posts/photo',
+							type: 'POST',
+							headers: {'Authorization': 'Bearer ' + token},
+//							data : JSON.stringify(post),
+							data : data,
+							contentType: false,
+							processData: false,
+							crossDomain: true,
+//							dataType: 'json',
+							success:function(datap){
+								console.log("dodata je slikaaaa");
+//								
+							},
+							error: function (jqXHR, textStatus, errorThrown) {  
+								alert(textStatus);
+							}
+						});
+						
 					}
 				});
 				

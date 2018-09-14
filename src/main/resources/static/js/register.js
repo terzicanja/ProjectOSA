@@ -10,6 +10,9 @@ $(document).ready(function(){
 		var password=passwordInput.val();
 		console.log("username i pass su: "+username+password)
 		
+		
+		var blobFile = $('#upload')[0].files[0];
+		
 		var user = {
 				'username': username,
 				'password': password
@@ -21,10 +24,38 @@ $(document).ready(function(){
 			url :"http://localhost:8080/api/users/create",
 			data : JSON.stringify(user),
 			dataType : 'json',
-			success : function(data) {
+			success : function(datap) {
 				alert('uspesno ste se registrovali');
 				
-				window.location.replace("http://localhost:8080/");
+				
+				var data = new FormData();
+				data.append("id", datap.id);
+				data.append("photo", blobFile);
+				
+				$.ajax({
+					url: 'http://localhost:8080/api/users/photo',
+					type: 'POST',
+//					headers: {'Authorization': 'Bearer ' + token},
+					data : data,
+					contentType: false,
+					processData: false,
+					crossDomain: true,
+//					dataType: 'json',
+					success:function(datap){
+						console.log("dodata je slikaaaa");
+//						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {  
+						alert(textStatus);
+						console.log("greska u dodavanju slike" + errorThrown + jqXHR);
+						console.log(jqXHR);
+					}
+				});
+				
+				
+				
+				
+//				window.location.replace("http://localhost:8080/");
 			},
 			error : function(e) {
 				alert("Error!")

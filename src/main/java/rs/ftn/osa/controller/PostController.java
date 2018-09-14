@@ -1,5 +1,6 @@
 package rs.ftn.osa.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import rs.ftn.osa.dto.CommentDTO;
 import rs.ftn.osa.dto.PostDTO;
@@ -173,6 +176,20 @@ public class PostController {
 		
 		post = postService.save(post);
 		return new ResponseEntity<PostDTO>(new PostDTO(post), HttpStatus.CREATED);
+	}
+	
+	@PostMapping(value = "/photo")
+	public ResponseEntity<Void> savePhoto(@RequestParam("id") Integer id, @RequestParam("photo") MultipartFile photo){
+		Post p = postService.findOne(id);
+		try {
+			p.setPhoto(photo.getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		p = postService.save(p);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	

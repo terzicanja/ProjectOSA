@@ -83,6 +83,16 @@ $(document).ready(function(){
 		        request.send();
 				
 				
+		        
+//		        var postPhoto = 'img/user.png';
+		        var postPhoto;
+				if(data.photo !=null){
+					postPhoto = 'data:image/gif;base64,'+data.photo;
+				}
+				var userPhoto;
+				if(data.user.photo !=null){
+					userPhoto = 'data:image/gif;base64,'+data.user.photo;
+				}
 				
 				
 				$('#title').text(data.title);
@@ -92,6 +102,8 @@ $(document).ready(function(){
 				$('#postBy').attr("href", "http://localhost:8080/html/profile.html?id="+data.user.username);
 				$('#postUpvoteBr').text(data.likes);
 				$('#postDownvoteBr').text(data.dislikes);
+				$("#img").attr("src", postPhoto);
+				$("#pic").attr("src", userPhoto);
 				
 				if(loggedin.username == data.user.username){
 					$('#title').after('<button id="editPost" name="'+data.id+'">edit post</button>');

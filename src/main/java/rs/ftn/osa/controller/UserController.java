@@ -1,5 +1,6 @@
 package rs.ftn.osa.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import rs.ftn.osa.dto.UserDTO;
 import rs.ftn.osa.entity.Authority;
@@ -99,7 +102,7 @@ public class UserController {
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
 		user.setPassword(bc.encode(userDTO.getPassword()));
 //		user.setPassword(userDTO.getPassword());
-		user.setPhoto("");
+//		user.setPhoto("");
 //		user.setPhoto(userDTO.getPhoto());
 		
 //		User u = userService.findByUsername(username);
@@ -112,18 +115,37 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.CREATED);
 	}
 	
+	@PostMapping(value = "/photo")
+	public ResponseEntity<Void> saveUserPhoto(@RequestParam("id") Integer id, @RequestParam("photo") MultipartFile photo){
+//		User user = new User();
+		User u = userService.findOne(id);
+		try {
+			u.setPhoto(photo.getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		user.setPhoto(userDTO.getPhoto());
+		
+		
+		u = userService.save(u);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
 	
 	@PutMapping(value = "/{id}", consumes = "application/json")
-	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable("id") Integer id){
-		User user = userService.findOne(id);
+	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable("id") String id){
+		User user = userService.findByUsername(id);
 		if(user == null) {
 			return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
 		}
 		
 		user.setName(userDTO.getName());
-		user.setUsername(userDTO.getUsername());
-		user.setPassword(userDTO.getPassword());
-		user.setPhoto(userDTO.getPhoto());
+//		user.setUsername(userDTO.getUsername());
+		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+		user.setPassword(bc.encode(userDTO.getPassword()));
+//		user.setPassword(userDTO.getPassword());
+//		user.setPhoto(userDTO.getPhoto());
 		
 		user = userService.save(user);
 		return new ResponseEntity<UserDTO>(new UserDTO(user), HttpStatus.CREATED);
