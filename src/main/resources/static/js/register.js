@@ -16,7 +16,7 @@ $(document).ready(function(){
 		var blobFile = $('#upload')[0].files[0];
 		
 		var user = {
-				'name': name
+				'name': name,
 				'username': username,
 				'password': password
 		}

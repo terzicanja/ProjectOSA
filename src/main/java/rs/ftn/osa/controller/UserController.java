@@ -114,7 +114,6 @@ public class UserController {
 	
 	@PostMapping(value = "/photo")
 	public ResponseEntity<Void> saveUserPhoto(@RequestParam("id") Integer id, @RequestParam("photo") MultipartFile photo){
-//		User user = new User();
 		User u = userService.findOne(id);
 		try {
 			u.setPhoto(photo.getBytes());
@@ -122,10 +121,33 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		user.setPhoto(userDTO.getPhoto());
-		
-		
 		u = userService.save(u);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	
+	@PostMapping(value = "/role/{username}/{role}")
+	public ResponseEntity<Void> updateRole(@PathVariable("username") String username, @PathVariable("role") String role){
+		User u = userService.findByUsername(username);
+//		try {
+//			u.setPhoto(photo.getBytes());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		Authority authority = authorityServiceInterface.findByName(role);
+		if(u.getUser_authorities().size() >0) {
+            u.getUser_authorities().clear();
+            u.getUser_authorities().add(authority);
+            userService.save(u);
+        }else{
+            u.getUser_authorities().add(authority);
+            userService.save(u);
+        }
+		
+//		Authority authority = authorityServiceInterface.findByName(role);
+//		u.getUser_authorities().add(authority);
+//		u = userService.save(u);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	

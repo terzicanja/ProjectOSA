@@ -52,7 +52,43 @@ $(document).ready(function(){
 								console.log(dat);
 								
 								if(data.authority == 'ROLE_ADMIN'){
-									$('#usern').after('<p>uloga korisnika je: '+dat.authority+'</p>');
+									$('#usern').after('<p id="uloga">uloga korisnika je: '+dat.authority+'</p>');
+									$('#uloga').after('<p id="bla">promeni korisnika u: </p>');
+									$('#bla').after('<select id="ponudaUloga">'+
+											  '<option value="ROLE_COMMENTATOR">Komentator</option>'+
+											  '<option value="ROLE_USER">Objavljivac</option>'+
+											  '<option value="ROLE_ADMIN">Admin</option>'+
+											  '</select>'+
+											'<button id="update" type="button">Potvrdi</button>');
+									
+									$('#update').on('click', function(event){
+										console.log("hocu da unapredim ovog");
+										var e = document.getElementById("ponudaUloga");
+										var role = e.options[e.selectedIndex].value;
+										console.log("hocu da ga promenim u: "+role);
+										
+										$.ajax({
+											url: 'http://localhost:8080/api/users/role/'+id+'/'+role,
+											type: 'POST',
+											headers: {'Authorization': 'Bearer ' + token},
+											contentType: 'application/json',
+											crossDomain: true,
+											dataType: 'json',
+											success:function(dataRole){
+												console.log(dataRole);
+												console.log("valjda sam ga apdejtovala u: "+role);
+												
+											},
+											error: function (jqXHR, textStatus, errorThrown) {  
+												alert(textStatus);
+												console.log(jqXHR);
+											}
+										});
+										
+										event.preventDefault();
+										return false;
+									});
+									
 								}
 							}
 						});

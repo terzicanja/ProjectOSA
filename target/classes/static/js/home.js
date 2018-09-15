@@ -23,7 +23,7 @@ $(document).ready(function(){
 //			$('#logovan').append('<p>'+loggedin.username+'</p>');
 //			console.log('uloga ulogovanog je: '+loggedin.role);
 			$("#me").attr("href", "http://localhost:8080/html/profile.html?id="+loggedin.username);
-			
+			console.log(loggedin);
 		}
 	});
 	
@@ -106,7 +106,7 @@ $(document).ready(function(){
 								'<a href="http://localhost:8080/html/profile.html?id='+datao[i].user.username+'" class="username">'+
 								datao[i].user.username+'</a><br>'+
 								'<p id="date">'+datao[i].date+'</p>'+
-								'<a href="http://localhost:8080/html/post.html?id='+datao[i].id+'" id="title">'+datao[i].title+'</a>'+
+								'<a href="http://localhost:8080/html/post.html?id='+datao[i].id+'" id="title">'+datao[i].title+'</a><br>'+
 								'<img id="img" src="data:image/gif;base64,'+datao[i].photo+'">'+
 							'</div>')
 //					}
