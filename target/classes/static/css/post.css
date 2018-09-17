@@ -1,10 +1,25 @@
 #desc{
+	display: inline-block;
 	width: 100%;
 	word-wrap: break-word;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+#datumPosta{
+	display: inline-block;
+	float: right;
+}
+
+#location{
+	display: inline-block;
+	float: left;
+	color: grey;
 }
 
 .comment{
 	padding: 5px;
+	margin-bottom: 10px;
 }
 
 .picComm{
@@ -25,10 +40,60 @@
 	display: inline;
 }
 
+#dateComm{
+	color: grey;
+}
+
+.ct, .ec{
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.ec{
+	display: block;
+	width: 400px;
+}
+
+#addContentTitle, #addPostTitle{
+	height: 1.5em;
+	width: 450px;
+	display: block;
+	resize: none;
+	outline: none;
+}
+#addContent, #addPost{
+	width: 450px;
+	display: inline-block;
+	margin-bottom: 15px;
+	margin-top: 5px;
+	resize: none;
+	outline: none;
+}
+#postComment{
+	display: inline-block;
+}
+
+#upvotePost, #downvotePost, #postUpvoteBr, #postDownvoteBr{
+	display: inline-block;
+}
+
 #upvoteBr, #downvoteBr, #upvote, #downvote{
 	display: inline-block;
 	float: left;
 }
+#downvoteBr{
+	margin-right: 150px;
+}
+
+#edit, #delete{
+	display: inline-block;
+}
+
+#uploaded{
+	display: block;
+	margin: 10px 0;
+}
+
+
 
 .dropbtn {
     background-color: #3498DB;

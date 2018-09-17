@@ -39,35 +39,24 @@
 		
 		<div>
 			<div class="leftboard">
-				ja sam
+			<!-- 	ja sam
 				<div id="logovan">
 				</div>
-				<a href="http://localhost:8080/html/newpost.html">create post</a>
+				<a href="http://localhost:8080/html/newpost.html">create post</a> -->
+				<p> .  </p>
 			</div>
 			<div class="posts">
 				<div class="addPost">
 					<textarea id="addPostTitle" maxlength="100" placeholder="title"></textarea>
-					<textarea id="addPost" maxlength="500" placeholder="post"></textarea>
+					<textarea id="addPost" placeholder="post"></textarea>
 					<input type="file" id="upload" onchange="previewFile()">
-					<img src="" height="200" id="uploaded" alt="Image preview...">
+					<img src="" id="uploaded" alt="Image preview...">
 					<input type="submit" value="Post" id="postPost">
 				</div>
 				<div class="comments">
 				</div>
 			</div>
 			<div class="rightboard">
-				<div class="comments">
-					<div class="comment">
-						<div class="picComm"></div>
-						<a href="#" class="usernameComm">username</a><br>
-						<div id="titleComm">naslov</div>
-						<div id="descComm">tekst tekst</div>
-						<div id="upvoteBr">2</div>
-						<button id="upvote">up</button>
-						<button id="downvote">down</button>
-						<div id="downvoteBr">2</div><br>
-					</div>
-				</div>
 			</div>
 		</div>
 		
@@ -90,6 +79,23 @@
 				}
 			}
 		}
+		
+		
+		function previewFile(input) {
+			  if (input.files && input.files[0]) {
+			    var reader = new FileReader();
+			    reader.onload = function(e) {
+			      $('#bla').attr('src', e.target.result);
+			    }
+
+			    reader.readAsDataURL(input.files[0]);
+			  }
+			}
+
+			$("#upload").change(function() {
+			  readURL(this);
+			});
+		
 	</script>
 
 </html>

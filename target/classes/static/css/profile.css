@@ -4,7 +4,23 @@
 }
 
 #usern{
-	display: inline;
+	display: inline-block;
+	float: left;
+}
+
+#editUser{
+	display: inline-block;
+	float: right;
+	margin-right: 50px;
+}
+
+#uloga{
+	display: block;
+}
+
+#bla, #ponudaUloga{
+	display: inline-block;
+	margin-right: 10px;
 }
 
 #img{

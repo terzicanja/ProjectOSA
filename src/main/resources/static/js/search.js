@@ -37,13 +37,17 @@ $(document).ready(function(){
 		dataType: 'json',
 		success:function(data){
 			console.log('postovi su: ' + data);
+			var s = "/img/noimage.png";
+			var u = "/img/nouser.jpg";
 			for(var i=0; i<data.length; i++){
 //				if(data[i].active==true){
 					$('.posts').append('<div class="post">'+
-							'<div class="pic"></div>'+
-							'<a href="#" class="username">username</a><br>'+
-							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title">'+data[i].title+'</a>'+
-							'<div id="img"></div>'+
+							'<img class="pic" id="pic" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
+							'<a href="http://localhost:8080/html/profile.html?id='+data[i].user.username+'" class="username">'+
+							data[i].user.username+'</a><br>'+
+							'<p id="date">'+data[i].date+'</p>'+
+							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title"><h3>'+data[i].title+'</h3></a><br>'+
+							'<img id="img" src="data:image/gif;base64,'+data[i].photo+'" onError="this.src=\x27'+s+'\x27;">'+
 						'</div>')
 //				}
 				

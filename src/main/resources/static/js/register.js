@@ -7,10 +7,10 @@ $(document).ready(function(){
 		var nameInput = $("input[name='ime']");
 		var userNameInput = $("input[name='username']");
 		var passwordInput = $("input[name='password']");
-		var name = userNameInput.val();
+		var name = nameInput.val();
 		var username = userNameInput.val();
 		var password = passwordInput.val();
-		console.log("username i pass su: "+username+password)
+		console.log("username i pass i IMEEEE su: "+username+password + "ime: "+ name);
 		
 		
 		var blobFile = $('#upload')[0].files[0];

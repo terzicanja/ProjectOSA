@@ -43,16 +43,18 @@ $(document).ready(function(){
 	        var async = true;
 	        var postPhoto;
 	        var userPhoto;
+	        var s = "/img/noimage.png";
+			var u = "/img/nouser.jpg";
 			
 			for(var i=0; i<data.length; i++){
 //				if(data[i].active==true){
 					$('.posts').append('<div class="post">'+
-							'<img class="pic" id="pic" src="data:image/gif;base64,'+data[i].user.photo+'">'+
+							'<img class="pic" id="pic" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
 							'<a href="http://localhost:8080/html/profile.html?id='+data[i].user.username+'" class="username">'+
 							data[i].user.username+'</a><br>'+
 							'<p id="date">'+data[i].date+'</p>'+
-							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title">'+data[i].title+'</a><br>'+
-							'<img id="img" src="data:image/gif;base64,'+data[i].photo+'">'+
+							'<a href="http://localhost:8080/html/post.html?id='+data[i].id+'" id="title"><h3>'+data[i].title+'</h3></a><br>'+
+							'<img id="img" src="data:image/gif;base64,'+data[i].photo+'" onError="this.src=\x27'+s+'\x27;">'+
 						'</div>')
 //				}
 				
@@ -98,16 +100,18 @@ $(document).ready(function(){
 				
 	//			$('#title').text(data.title);
 	//			$('#desc').text(data.description);
+				var s = "/img/noimage.png";
+				var u = "/img/nouser.jpg";
 				
 				for(var i=0; i<datao.length; i++){
 //					if(data[i].active==true){
 						$('.posts').append('<div class="post">'+
-								'<img class="pic" id="pic" src="data:image/gif;base64,'+datao[i].user.photo+'">'+
+								'<img class="pic" id="pic" src="data:image/gif;base64,'+datao[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
 								'<a href="http://localhost:8080/html/profile.html?id='+datao[i].user.username+'" class="username">'+
 								datao[i].user.username+'</a><br>'+
 								'<p id="date">'+datao[i].date+'</p>'+
-								'<a href="http://localhost:8080/html/post.html?id='+datao[i].id+'" id="title">'+datao[i].title+'</a><br>'+
-								'<img id="img" src="data:image/gif;base64,'+datao[i].photo+'">'+
+								'<a href="http://localhost:8080/html/post.html?id='+datao[i].id+'" id="title"><h3>'+datao[i].title+'</h3></a><br>'+
+								'<img id="img" src="data:image/gif;base64,'+datao[i].photo+'" onError="this.src=\x27'+s+'\x27;">'+
 							'</div>')
 //					}
 					

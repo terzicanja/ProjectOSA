@@ -39,6 +39,7 @@ $(document).ready(function(){
 					
 					if(data.authority == 'ROLE_ADMIN'){
 						$('#logovan').after('<p>moja uloga je'+data.authority+'</p>');
+						console.log("znaci ja sam admin");
 						
 						
 						$.ajax({
@@ -51,8 +52,8 @@ $(document).ready(function(){
 							success:function(dat){
 								console.log(dat);
 								
-								if(data.authority == 'ROLE_ADMIN'){
-									$('#usern').after('<p id="uloga">uloga korisnika je: '+dat.authority+'</p>');
+//								if(data.authority == 'ROLE_ADMIN'){
+									$('#usern').after('<br><p id="uloga">uloga korisnika je: '+dat.authority+'</p>');
 									$('#uloga').after('<p id="bla">promeni korisnika u: </p>');
 									$('#bla').after('<select id="ponudaUloga">'+
 											  '<option value="ROLE_COMMENTATOR">Komentator</option>'+
@@ -77,11 +78,13 @@ $(document).ready(function(){
 											success:function(dataRole){
 												console.log(dataRole);
 												console.log("valjda sam ga apdejtovala u: "+role);
+												location.reload()
 												
 											},
 											error: function (jqXHR, textStatus, errorThrown) {  
-												alert(textStatus);
-												console.log(jqXHR);
+//												alert(textStatus);
+//												console.log(jqXHR);
+												location.reload()
 											}
 										});
 										
@@ -89,7 +92,7 @@ $(document).ready(function(){
 										return false;
 									});
 									
-								}
+//								}
 							}
 						});
 					}
@@ -113,12 +116,16 @@ $(document).ready(function(){
 					var userPhoto;
 					if(dat.photo !=null){
 						userPhoto = 'data:image/gif;base64,'+dat.photo;
+					}else{
+						userPhoto = "/img/nouser.jpg";
 					}
+					var u = "/img/nouser.jpg";
 					$("#pic").attr("src", userPhoto);
+//					$("#pic").attr("onError", "this.src=\x27"+u+"\x27;");
 					
 					if(dat.username == loggedin.username){
 						console.log('gledam svoj profiiiil');
-						$('#usern').after('<a href="http://localhost:8080/html/edit.html?id='+dat.username+'" class="usernameComm">edit profile</a>');
+						$('#usern').after('<a href="http://localhost:8080/html/edit.html?id='+dat.username+'" id="editUser" class="usernameComm">edit profile</a>');
 					}
 				}
 			});

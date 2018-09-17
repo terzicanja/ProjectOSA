@@ -15,7 +15,6 @@ $(document).ready(function(){
 	}
 	
 	
-	
 	function myFunction() {
 		document.getElementById("myDropdown").classList.toggle("show");
 	}
@@ -89,10 +88,14 @@ $(document).ready(function(){
 		        var postPhoto;
 				if(data.photo !=null){
 					postPhoto = 'data:image/gif;base64,'+data.photo;
+				}else{
+					postPhoto = "/img/noimage.png";
 				}
 				var userPhoto;
 				if(data.user.photo !=null){
 					userPhoto = 'data:image/gif;base64,'+data.user.photo;
+				}else{
+					userPhoto = "/img/nouser.jpg";
 				}
 				
 				
@@ -196,6 +199,8 @@ $(document).ready(function(){
 				console.log(data);
 				
 				console.log('ulogovani lik je: '+loggedin.username);
+				var s = "/img/noimage.png";
+				var u = "/img/nouser.jpg";
 				
 	//			$('#title').text(data.title);
 	//			$('#desc').text(data.description);
@@ -203,25 +208,25 @@ $(document).ready(function(){
 				for(var i=0; i<data.length; i++){
 					if(data[i].user.username == loggedin.username){
 						$('.comments').append('<div class="comment">'+
-								'<img class="picComm" id="picComm" src="data:image/gif;base64,'+data[i].user.photo+'">'+
+								'<img class="picComm" id="picComm" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
 								'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
-								'<div id="titleComm">'+data[i].title+'</div>'+
+								'<div id="titleComm"><h4>'+data[i].title+'</h4></div>'+
 								'<div id="dateComm">'+data[i].date+'</div>'+
-								'<div id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
+								'<div class="ct" id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
 								'<div id="upvoteBr" name="u'+data[i].id+'">'+data[i].likes+'</div>'+
 								'<button id="upvote" name="'+data[i].id+'">up</button>'+
 								'<button id="downvote" name="'+data[i].id+'">down</button>'+
-								'<div id="downvoteBr" name="d'+data[i].id+'">'+data[i].dislikes+'</div><br>'+
+								'<div id="downvoteBr" name="d'+data[i].id+'">'+data[i].dislikes+'</div>'+
 								'<button id="edit" name="'+data[i].id+'">edit</button>'+
 								'<button id="delete" name="'+data[i].id+'">delete</button>'+
 							'</div>')
 					}else if(data[i].username!=loggedin.username){
 						$('.comments').append('<div class="comment">'+
-								'<div class="picComm"></div>'+
+								'<img class="picComm" id="picComm" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
 								'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
-								'<div id="titleComm">'+data[i].title+'</div>'+
+								'<div id="titleComm"><h4>'+data[i].title+'</h4></div>'+
 								'<div id="dateComm">'+data[i].date+'</div>'+
-								'<div id="descComm">'+data[i].description+'</div>'+
+								'<div class="ct" id="descComm">'+data[i].description+'</div>'+
 								'<div id="upvoteBr" name="u'+data[i].id+'">'+data[i].likes+'</div>'+
 								'<button id="upvote" name="'+data[i].id+'">up</button>'+
 								'<button id="downvote" name="'+data[i].id+'">down</button>'+
@@ -352,7 +357,7 @@ $(document).ready(function(){
 			var old = $(find).text();
 			console.log('stari komentar je: '+old);
 			$(find).hide();
-			$('#dateComm').after('<textarea id="editContent'+idComm+'" maxlength="100">'+old+'</textarea>');
+			$('#dateComm').after('<textarea class="ec" id="editContent'+idComm+'" maxlength="100">'+old+'</textarea>');
 			var editContent = '#editContent' + idComm;
 			$(editContent).after('<button type="button" class="cancelEdit" id="cancelEdit'+idComm+'" name="'+idComm+'">cancel</button>');
 			$(editContent).after('<button type="button" class="confirmEdit" id="confirmEdit'+idComm+'" name="'+idComm+'">confirm</button>');
@@ -473,6 +478,7 @@ $(document).ready(function(){
 //				dataType: 'json',
 				success:function(data){
 					console.log('obrisan je post OVDE TREBA REDIRECT NA GLAVNU STRANUUUUU' + data);
+					window.location.replace("http://localhost:8080");
 				}
 			});
 		});
@@ -597,6 +603,9 @@ $(document).ready(function(){
 				success:function(data){
 					console.log('postovi su: ' + data);
 					
+					var s = "/img/noimage.png";
+					var u = "/img/nouser.jpg";
+					
 					console.log('ulogovani lik je: '+loggedin.username);
 					
 		//			$('#title').text(data.title);
@@ -605,25 +614,25 @@ $(document).ready(function(){
 					for(var i=0; i<data.length; i++){
 						if(data[i].user.username == loggedin.username){
 							$('.comments').append('<div class="comment">'+
-									'<div class="picComm"></div>'+
+									'<img class="picComm" id="picComm" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
 									'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
-									'<div id="titleComm">'+data[i].title+'</div>'+
+									'<div id="titleComm"><h4>'+data[i].title+'</h4></div>'+
 									'<div id="dateComm">'+data[i].date+'</div>'+
-									'<div id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
+									'<div class="ct" id="descComm'+data[i].id+'">'+data[i].description+'</div>'+
 									'<div id="upvoteBr">'+data[i].likes+'</div>'+
 									'<button id="upvote" name="'+data[i].id+'">up</button>'+
 									'<button id="downvote" name="'+data[i].id+'">down</button>'+
-									'<div id="downvoteBr">'+data[i].dislikes+'</div><br>'+
+									'<div id="downvoteBr">'+data[i].dislikes+'</div>'+
 									'<button id="edit" name="'+data[i].id+'">edit</button>'+
 									'<button id="delete" name="'+data[i].id+'">delete</button>'+
 								'</div>')
 						}else if(data[i].username!=loggedin.username){
 							$('.comments').append('<div class="comment">'+
-									'<div class="picComm"></div>'+
+									'<img class="picComm" id="picComm" src="data:image/gif;base64,'+data[i].user.photo+'" onError="this.src=\x27'+u+'\x27;">'+
 									'<a href="#" class="usernameComm">'+data[i].user.username+'</a><br>'+
-									'<div id="titleComm">'+data[i].title+'</div>'+
+									'<div id="titleComm"><h4>'+data[i].title+'</h4></div>'+
 									'<div id="dateComm">'+data[i].date+'</div>'+
-									'<div id="descComm">'+data[i].description+'</div>'+
+									'<div class="ct" id="descComm">'+data[i].description+'</div>'+
 									'<div id="upvoteBr">'+data[i].likes+'</div>'+
 									'<button id="upvote" name="'+data[i].id+'">up</button>'+
 									'<button id="downvote" name="'+data[i].id+'">down</button>'+

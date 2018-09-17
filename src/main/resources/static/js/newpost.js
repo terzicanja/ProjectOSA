@@ -116,6 +116,14 @@ $(document).ready(function(){
 //		    });
 			
 			
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#bla').attr('src', e.target.result);
+			}
+
+//			reader.readAsDataURL(input.files[0]);
+			
+			
 			
 			
 			$('#postPost').on('click', function(event){

@@ -159,10 +159,19 @@ public class UserController {
 			return new ResponseEntity<UserDTO>(HttpStatus.BAD_REQUEST);
 		}
 		
+		if(userDTO.getPassword().equals(null) || userDTO.getPassword().equals("")) {
+			System.out.println("sifra je prazna");
+		}else {
+			BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+			user.setPassword(bc.encode(userDTO.getPassword()));
+		}
+		
 		user.setName(userDTO.getName());
 //		user.setUsername(userDTO.getUsername());
-		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-		user.setPassword(bc.encode(userDTO.getPassword()));
+		
+//		BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+//		user.setPassword(bc.encode(userDTO.getPassword()));
+		
 //		user.setPassword(userDTO.getPassword());
 //		user.setPhoto(userDTO.getPhoto());
 		
